@@ -5,6 +5,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.yychun1217.mychallenge.R
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * An activity representing a list of Pings. This activity
@@ -14,6 +15,7 @@ import com.yychun1217.mychallenge.R
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
+@AndroidEntryPoint
 class DeliveryListActivity : AppCompatActivity() {
 
     /**

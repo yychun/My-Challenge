@@ -16,7 +16,11 @@
     This layout is a two-pane layout for the Items master/detail flow.
     -->
 
-    <include layout="@layout/layout_delivery_list" />
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/main"
+        android:name="com.yychun1217.mychallenge.ui.DeliveryListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <FrameLayout
         android:id="@+id/item_detail_container"

@@ -5,9 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.yychun1217.mychallenge.R
+import com.yychun1217.mychallenge.model.remote.DeliveryData
 import com.yychun1217.mychallenge.viewmodel.DeliveryListViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_delivery_list.*
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -25,9 +31,20 @@ class DeliveryListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.deliveries.observe(viewLifecycleOwner) {
-            // update list
+
+        initViews()
+    }
+
+    private fun initViews() {
+        delivery_list.addItemDecoration(
+            DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+        )
+        delivery_list.adapter = DeliveryAdapter()
+
+        lifecycleScope.launchWhenResumed {
+            viewModel.appPage.collectLatest {
+                (delivery_list.adapter as PagingDataAdapter<DeliveryData, DeliveryItemViewHolder>).submitData(it)
+            }
         }
-        viewModel.loadDeliveries()
     }
 }

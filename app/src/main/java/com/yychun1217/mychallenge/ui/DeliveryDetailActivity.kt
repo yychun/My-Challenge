@@ -7,6 +7,7 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
 import com.yychun1217.mychallenge.R
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * An activity representing a single Item detail screen. This
@@ -14,6 +15,7 @@ import com.yychun1217.mychallenge.R
  * item details are presented side-by-side with a list of items
  * in a [DeliveryListActivity].
  */
+@AndroidEntryPoint
 class DeliveryDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

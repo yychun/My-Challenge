@@ -2,29 +2,22 @@ package com.yychun1217.mychallenge.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.yychun1217.mychallenge.datasource.IDeliveryDataSource
-import com.yychun1217.mychallenge.model.remote.DeliveryData
-import kotlinx.coroutines.launch
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
+import com.yychun1217.mychallenge.datasource.AbstractDeliveryMergedPagingSource
 
 class DeliveryListViewModel @ViewModelInject constructor(
-    private val remote: IDeliveryDataSource
+    merged: AbstractDeliveryMergedPagingSource
 ) : ViewModel() {
-    companion object {
-        private const val GET_DELIVERIES_LIMIT = 20
-    }
-
-    private val offset: Int = 0
-    private val _deliveries: MutableLiveData<List<DeliveryData>> = MutableLiveData()
-    val deliveries: LiveData<List<DeliveryData>>
-        get() = _deliveries
-
-    fun loadDeliveries() {
-        viewModelScope.launch {
-            remote.getDeliveries(offset, GET_DELIVERIES_LIMIT)?.let {
-                _deliveries.postValue(
-                    (_deliveries.value ?: listOf()).plus(it)
-                )
-            }
-        }
-    }
+    val appPage = Pager(
+        PagingConfig(
+            pageSize = merged.config.limit,
+            prefetchDistance = 1,
+            enablePlaceholders = true,
+            initialLoadSize = 1
+        )
+    ) {
+        merged
+    }.flow.cachedIn(viewModelScope)
 }

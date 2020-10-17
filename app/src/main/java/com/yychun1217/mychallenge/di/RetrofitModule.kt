@@ -1,8 +1,6 @@
-package com.yychun1217.mychallenge.module
+package com.yychun1217.mychallenge.di
 
 import com.yychun1217.mychallenge.DeliveryService
-import com.yychun1217.mychallenge.datasource.DeliveryRemoteRepository
-import com.yychun1217.mychallenge.datasource.IDeliveryDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,13 +29,7 @@ class RetrofitModule {
     @Provides
     @Inject
     @Singleton
-    fun providerDeliveryService(
+    fun provideDeliveryService(
         retrofit: Retrofit
     ): DeliveryService = retrofit.create(DeliveryService::class.java)
-
-    @Provides
-    @Inject
-    fun providerIDeliveryDataSource(
-        deliveryService: DeliveryService
-    ): IDeliveryDataSource = DeliveryRemoteRepository(deliveryService)
 }
