@@ -23,7 +23,7 @@ interface Delivery {
                     id = id,
                     isFavourite = false,
                     remarks = remarks,
-                    picture = goodsPicture,
+                    goodsPicture = goodsPicture,
                     surcharge = surcharge.substring(1).toFloat(),
                     to = route.end
                 ) as ENTITY
@@ -33,7 +33,7 @@ interface Delivery {
                     id = id,
                     isFavourite = false,
                     remarks = remarks,
-                    picture = goodsPicture,
+                    goodsPicture = goodsPicture,
                     surcharge = surcharge.substring(1).toFloat(),
                     to = route.end
                 ) as ENTITY
@@ -47,7 +47,7 @@ interface Delivery {
         val id: String,
         val isFavourite: Boolean,
         val remarks: String,
-        val picture: String,
+        val goodsPicture: String,
         val surcharge: Float,
         val to: String,
     ) : IEntity.Ui {
@@ -61,7 +61,7 @@ interface Delivery {
         val id: String,
         val isFavourite: Boolean,
         val remarks: String,
-        val picture: String,
+        val goodsPicture: String,
         val surcharge: Float,
         val to: String,
     ) : IEntity.Db {
@@ -74,7 +74,7 @@ interface Delivery {
                     id = id,
                     isFavourite = isFavourite,
                     remarks = remarks,
-                    picture = picture,
+                    goodsPicture = goodsPicture,
                     surcharge = surcharge,
                     to = to
                 ) as ENTITY
