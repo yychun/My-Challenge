@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.yychun1217.mychallenge.databinding.FragmentDeliveryListBinding
 import com.yychun1217.mychallenge.viewmodel.DeliveryListViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -32,6 +34,16 @@ class DeliveryListFragment : Fragment() {
     }
 
     private fun initViews() {
+        with(binding.listDelivery) {
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            adapter = DeliveryAdapter()
         }
+
+        lifecycleScope.launchWhenResumed {
+            viewModel.appPage.collectLatest {
+                (binding.listDelivery.adapter as? DeliveryAdapter)?.submitData(it)
+            }
+        }
+    }
     }
 }

@@ -1,5 +1,8 @@
 package com.yychun1217.mychallenge.ui
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
@@ -16,6 +19,7 @@ class DeliveryItemViewHolder(private val binding: ViewDeliveryListItemBinding) :
             Glide.with(context).load(data.goodsPicture)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .fitCenter()
+                .placeholder(ColorDrawable(Color.LTGRAY))
                 .into(binding.imageGoods)
             binding.textFrom.text = context.getString(R.string.delivery_list_from, data.from)
             binding.textTo.text = context.getString(R.string.delivery_list_to, data.to)
@@ -28,7 +32,7 @@ class DeliveryItemViewHolder(private val binding: ViewDeliveryListItemBinding) :
 
     companion object {
         fun create(parent: ViewGroup): DeliveryItemViewHolder {
-            return DeliveryItemViewHolder(ViewDeliveryListItemBinding.bind(parent))
+            return DeliveryItemViewHolder(ViewDeliveryListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
         }
     }
 }

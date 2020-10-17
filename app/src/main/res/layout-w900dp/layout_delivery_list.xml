@@ -17,9 +17,9 @@
     -->
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/main"
+        android:id="@+id/nav_host_fragment"
         android:name="com.yychun1217.mychallenge.ui.DeliveryListFragment"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/delivery_list_item_width"
         android:layout_height="match_parent" />
 
     <FrameLayout
