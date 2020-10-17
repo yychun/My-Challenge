@@ -7,16 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.yychun1217.mychallenge.ItemDetailActivity
-import com.yychun1217.mychallenge.ItemDetailFragment
-import com.yychun1217.mychallenge.ItemListActivity
 import com.yychun1217.mychallenge.R
 import com.yychun1217.mychallenge.dummy.DummyContent
 
-class SimpleItemRecyclerViewAdapter(private val parentActivity: ItemListActivity,
-                                    private val values: List<DummyContent.DummyItem>,
-                                    private val twoPane: Boolean) :
-    RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
+class DeliveryItemRecyclerViewAdapter(private val parentActivity: DeliveryListActivity,
+                                      private val values: List<DummyContent.DummyItem>,
+                                      private val twoPane: Boolean) :
+    RecyclerView.Adapter<DeliveryItemRecyclerViewAdapter.ViewHolder>() {
 
     private val onClickListener: View.OnClickListener
 
@@ -24,9 +21,9 @@ class SimpleItemRecyclerViewAdapter(private val parentActivity: ItemListActivity
         onClickListener = View.OnClickListener { v ->
             val item = v.tag as DummyContent.DummyItem
             if (twoPane) {
-                val fragment = ItemDetailFragment().apply {
+                val fragment = DeliveryDetailFragment().apply {
                     arguments = Bundle().apply {
-                        putString(ItemDetailFragment.ARG_ITEM_ID, item.id)
+                        putString(DeliveryDetailFragment.ARG_ITEM_ID, item.id)
                     }
                 }
                 parentActivity.supportFragmentManager
@@ -34,8 +31,8 @@ class SimpleItemRecyclerViewAdapter(private val parentActivity: ItemListActivity
                     .replace(R.id.item_detail_container, fragment)
                     .commit()
             } else {
-                val intent = Intent(v.context, ItemDetailActivity::class.java).apply {
-                    putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id)
+                val intent = Intent(v.context, DeliveryDetailActivity::class.java).apply {
+                    putExtra(DeliveryDetailFragment.ARG_ITEM_ID, item.id)
                 }
                 v.context.startActivity(intent)
             }
@@ -44,7 +41,7 @@ class SimpleItemRecyclerViewAdapter(private val parentActivity: ItemListActivity
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_list_content, parent, false)
+            .inflate(R.layout.delivery_list_content, parent, false)
         return ViewHolder(view)
     }
 

@@ -1,6 +1,8 @@
 package com.yychun1217.mychallenge.module
 
 import com.yychun1217.mychallenge.DeliveryService
+import com.yychun1217.mychallenge.datasource.DeliveryRemoteRepository
+import com.yychun1217.mychallenge.datasource.IDeliveryDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,8 +14,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
-object RetrofitModule {
-    private const val BASE_URL = "https://mock-api-mobile.dev.lalamove.com/"
+class RetrofitModule {
+    companion object {
+        private const val BASE_URL = "https://mock-api-mobile.dev.lalamove.com/"
+    }
 
     @Provides
     @Singleton
@@ -24,10 +28,16 @@ object RetrofitModule {
             .build()
     }
 
-    @Inject
     @Provides
+    @Inject
     @Singleton
     fun providerDeliveryService(
         retrofit: Retrofit
     ): DeliveryService = retrofit.create(DeliveryService::class.java)
+
+    @Provides
+    @Inject
+    fun providerIDeliveryDataSource(
+        deliveryService: DeliveryService
+    ): IDeliveryDataSource = DeliveryRemoteRepository(deliveryService)
 }

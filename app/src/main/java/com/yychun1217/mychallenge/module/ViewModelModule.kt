@@ -1,5 +1,6 @@
 package com.yychun1217.mychallenge.module
 
+import com.yychun1217.mychallenge.datasource.IDeliveryDataSource
 import com.yychun1217.mychallenge.viewmodel.DeliveryListViewModel
 import dagger.Module
 import dagger.Provides
@@ -12,5 +13,7 @@ import dagger.hilt.android.scopes.ActivityScoped
 class ViewModelModule {
     @Provides
     @ActivityScoped
-    fun providerDeliveryListViewModel() = DeliveryListViewModel()
+    fun providerDeliveryListViewModel(
+        remote: IDeliveryDataSource
+    ) = DeliveryListViewModel(remote)
 }
