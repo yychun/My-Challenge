@@ -11,17 +11,21 @@ abstract class AbstractMergedPagingSource<KEY : Any, DB : IEntity.Db, API : IEnt
     override val local: ILocalPagingSource<KEY, DB>,
     override val remote: IRemotePagingSource<KEY, API>
 ) : PagingSource<KEY, UI>(), IMergedPagingSource<KEY, DB, API> {
-    override suspend fun load(params: LoadParams<KEY>): PagingSource.LoadResult<KEY, UI> {
-        val key = params.key ?: getFirstKey()
-        val page = local.loadPage(key) ?: remote.loadPage(key)?.apply {
-            local.insert(key, this.mapNotNull { it.toEntity(EntityType.DB) })
-        }
-        return page?.mapNotNull { it.toEntity(EntityType.UI) as? UI }.let {
-            PagingSource.LoadResult.Page(it ?: emptyList(), getPrevKey(key), getNextKey(key))
+    override suspend fun load(params: LoadParams<KEY>): LoadResult<KEY, UI> {
+        return try {
+            val key = params.key ?: getFirstKey()
+            val page = local.loadPage(key) ?: remote.loadPage(key)?.apply {
+                local.insert(key, this.mapNotNull { it.toEntity(EntityType.DB) })
+            }
+            page?.mapNotNull { it.toEntity(EntityType.UI) as? UI }.orEmpty().let {
+                LoadResult.Page(it, getPrevKey(key, it.size), getNextKey(key, it.size))
+            }
+        } catch (e: Exception) {
+            LoadResult.Error(e)
         }
     }
 
     abstract fun getFirstKey(): KEY
-    abstract fun getPrevKey(key: KEY): KEY?
-    abstract fun getNextKey(key: KEY): KEY?
+    abstract fun getPrevKey(key: KEY, pageSize: Int): KEY?
+    abstract fun getNextKey(key: KEY, pageSize: Int): KEY?
 }

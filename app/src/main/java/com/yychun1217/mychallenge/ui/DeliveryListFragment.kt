@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.yychun1217.mychallenge.databinding.FragmentDeliveryListBinding
 import com.yychun1217.mychallenge.viewmodel.DeliveryListViewModel
+import com.yychun1217.pagination.ui.PaginationLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
@@ -34,16 +36,27 @@ class DeliveryListFragment : Fragment() {
     }
 
     private fun initViews() {
-        with(binding.listDelivery) {
+        binding.listDelivery.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-            adapter = DeliveryAdapter()
-        }
-
-        lifecycleScope.launchWhenResumed {
-            viewModel.appPage.collectLatest {
-                (binding.listDelivery.adapter as? DeliveryAdapter)?.submitData(it)
+            val deliveryAdapter = DeliveryAdapter().apply {
+                addLoadStateListener { loadState ->
+                    if (loadState.refresh is LoadState.NotLoading) {
+                        binding.listDelivery.visibility = View.VISIBLE
+                    } else {
+                        binding.listDelivery.visibility = View.GONE
+                    }
+                }
             }
+
+            lifecycleScope.launchWhenResumed {
+                viewModel.appPage.collectLatest {
+                    deliveryAdapter.submitData(it)
+                }
+            }
+
+            adapter = deliveryAdapter.withLoadStateFooter(PaginationLoadStateAdapter {
+                deliveryAdapter.retry()
+            })
         }
-    }
     }
 }

@@ -35,7 +35,7 @@ class DataSourceModule {
         local: ILocalPagingSource<GetDeliveryRequest, Delivery.Db>,
         remote: IRemotePagingSource<GetDeliveryRequest, Delivery.Api>
     ): AbstractDeliveryMergedPagingSource = DeliveryMergedPagingSource(
-        DeliveryMergedPagingSource.Companion.Config(0, 20),
+        AbstractDeliveryMergedPagingSource.Companion.Config(0, 20),
         local,
         remote
     )
