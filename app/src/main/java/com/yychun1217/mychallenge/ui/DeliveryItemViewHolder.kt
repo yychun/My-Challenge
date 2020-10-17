@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.yychun1217.mychallenge.R
-import com.yychun1217.mychallenge.model.remote.DeliveryData
+import com.yychun1217.mychallenge.model.Delivery
 import kotlinx.android.synthetic.main.delivery_list_item.view.*
 
 class DeliveryItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    fun bind(position: Int, data: DeliveryData) {
+    fun bind(position: Int, data: Delivery.Ui) {
         itemView.id_text.setText(data.toString())
     }
 

@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">MyChallenge</string>
-    <string name="title_item_detail">Item Detail</string>
+    <string name="app_name">My Deliveries</string>
+    <string name="title_delivery_detail">Delivery Details</string>
 </resources>

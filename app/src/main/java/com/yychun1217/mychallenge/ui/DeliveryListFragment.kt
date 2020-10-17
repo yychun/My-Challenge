@@ -9,7 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.yychun1217.mychallenge.R
-import com.yychun1217.mychallenge.model.remote.DeliveryData
+import com.yychun1217.mychallenge.model.Delivery
 import com.yychun1217.mychallenge.viewmodel.DeliveryListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_delivery_list.*
@@ -43,7 +43,7 @@ class DeliveryListFragment : Fragment() {
 
         lifecycleScope.launchWhenResumed {
             viewModel.appPage.collectLatest {
-                (delivery_list.adapter as PagingDataAdapter<DeliveryData, DeliveryItemViewHolder>).submitData(it)
+                (delivery_list.adapter as PagingDataAdapter<Delivery.Ui, DeliveryItemViewHolder>).submitData(it)
             }
         }
     }

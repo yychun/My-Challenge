@@ -5,8 +5,8 @@ import com.yychun1217.mychallenge.datasource.AbstractDeliveryMergedPagingSource
 import com.yychun1217.mychallenge.datasource.local.DeliveryLocalPagingSource
 import com.yychun1217.mychallenge.datasource.DeliveryMergedPagingSource
 import com.yychun1217.mychallenge.datasource.remote.DeliveryRemotePagingSource
+import com.yychun1217.mychallenge.model.Delivery
 import com.yychun1217.mychallenge.model.request.GetDeliveryRequest
-import com.yychun1217.mychallenge.model.remote.DeliveryData
 import com.yychun1217.pagination.datasource.ILocalPagingSource
 import com.yychun1217.pagination.datasource.IRemotePagingSource
 import dagger.Module
@@ -20,20 +20,20 @@ import javax.inject.Inject
 class DataSourceModule {
 
     @Provides
-    fun provideILocalPagingSource(): ILocalPagingSource<GetDeliveryRequest, DeliveryData> =
+    fun provideILocalPagingSource(): ILocalPagingSource<GetDeliveryRequest, Delivery.Db> =
         DeliveryLocalPagingSource()
 
     @Provides
     @Inject
     fun provideIRemotePagingSource(
         service: DeliveryService
-    ): IRemotePagingSource<GetDeliveryRequest, DeliveryData> = DeliveryRemotePagingSource(service)
+    ): IRemotePagingSource<GetDeliveryRequest, Delivery.Api> = DeliveryRemotePagingSource(service)
 
     @Provides
     @Inject
     fun provideDeliveryMergedPagingSource(
-        local: ILocalPagingSource<GetDeliveryRequest, DeliveryData>,
-        remote: IRemotePagingSource<GetDeliveryRequest, DeliveryData>
+        local: ILocalPagingSource<GetDeliveryRequest, Delivery.Db>,
+        remote: IRemotePagingSource<GetDeliveryRequest, Delivery.Api>
     ): AbstractDeliveryMergedPagingSource = DeliveryMergedPagingSource(
         DeliveryMergedPagingSource.Companion.Config(0, 20),
         local,

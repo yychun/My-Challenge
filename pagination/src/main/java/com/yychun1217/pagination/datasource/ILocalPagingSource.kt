@@ -1,5 +1,7 @@
 package com.yychun1217.pagination.datasource
 
-interface ILocalPagingSource<KEY, DATA> : IPagingSource<KEY, DATA> {
-    suspend fun insert(key: KEY, page: List<DATA>): Boolean
+import com.yychun1217.pagination.model.IEntity
+
+interface ILocalPagingSource<KEY, DB: IEntity.Db> : IPagingSource<KEY, DB> {
+    suspend fun insert(key: KEY, page: List<DB>): Boolean
 }

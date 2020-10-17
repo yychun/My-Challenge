@@ -1,6 +1,6 @@
 package com.yychun1217.mychallenge
 
-import com.yychun1217.mychallenge.model.remote.DeliveryData
+import com.yychun1217.mychallenge.model.Delivery
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -9,5 +9,5 @@ interface DeliveryService {
     suspend fun getDeliveries(
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
-    ): List<DeliveryData>?
+    ): List<Delivery.Api>?
 }
