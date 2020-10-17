@@ -1,10 +1,13 @@
 package com.yychun1217.mychallenge.di
 
+import com.yychun1217.mychallenge.BuildConfig
 import com.yychun1217.mychallenge.DeliveryService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
@@ -18,9 +21,19 @@ class RetrofitModule {
     }
 
     @Provides
+    fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder().apply {
+        if (BuildConfig.DEBUG) addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        })
+    }.build()
+
+    @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit {
+    fun provideRetrofit(
+        client: OkHttpClient
+    ): Retrofit {
         return Retrofit.Builder()
+            .client(client)
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
