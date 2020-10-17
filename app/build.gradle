@@ -30,6 +30,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), './proguards/proguard-rules.pro', './proguards/proguard-glide.pro', './proguards/proguard-square-retrofit2.pro'
         }
     }
+
+    // Android Studio 4.0
+    buildFeatures {
+        viewBinding = true
+    }
+//    // Available in Android Gradle Plugin 3.6.0
+//    viewBinding {
+//        enabled = true
+//    }
 }
 
 dependencies {

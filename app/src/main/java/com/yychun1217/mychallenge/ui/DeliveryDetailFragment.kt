@@ -6,8 +6,8 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.yychun1217.mychallenge.R
+import com.yychun1217.mychallenge.databinding.FragmentDeliveryDetailBinding
 import com.yychun1217.mychallenge.dummy.DummyContent
 
 /**
@@ -22,6 +22,7 @@ class DeliveryDetailFragment : Fragment() {
      * The dummy content this fragment is presenting.
      */
     private var item: DummyContent.DummyItem? = null
+    private lateinit var binding: FragmentDeliveryDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,22 +33,22 @@ class DeliveryDetailFragment : Fragment() {
                 // arguments. In a real-world scenario, use a Loader
                 // to load content from a content provider.
                 item = DummyContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
-                activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = item?.content
+                activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title =
+                    item?.content
             }
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.delivery_detail, container, false)
-
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = FragmentDeliveryDetailBinding.inflate(inflater).apply {
+        binding = this
         // Show the dummy content as text in a TextView.
         item?.let {
-            rootView.findViewById<TextView>(R.id.item_detail).text = it.details
+            itemDetail.text = it.details
         }
-
-        return rootView
-    }
+    }.root
 
     companion object {
         /**

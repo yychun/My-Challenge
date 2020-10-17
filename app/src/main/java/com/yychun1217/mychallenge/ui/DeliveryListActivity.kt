@@ -3,8 +3,8 @@ package com.yychun1217.mychallenge.ui
 import android.os.Bundle
 import androidx.core.widget.NestedScrollView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import com.yychun1217.mychallenge.R
+import com.yychun1217.mychallenge.databinding.ActivityDeliveryListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -23,14 +23,15 @@ class DeliveryListActivity : AppCompatActivity() {
      * device.
      */
     private var twoPane: Boolean = false
+    private lateinit var binding: ActivityDeliveryListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_delivery_list)
+        binding = ActivityDeliveryListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        toolbar.title = title
+        setSupportActionBar(binding.toolbar)
+        binding.toolbar.title = title
 
         if (findViewById<NestedScrollView>(R.id.item_detail_container) != null) {
             // The detail container view will be present only in the
@@ -39,5 +40,22 @@ class DeliveryListActivity : AppCompatActivity() {
             // activity should be in two-pane mode.
             twoPane = true
         }
+
+//        if (twoPane) {
+//            val fragment = DeliveryDetailFragment().apply {
+//                arguments = Bundle().apply {
+//                    putString(DeliveryDetailFragment.ARG_ITEM_ID, item.id)
+//                }
+//            }
+//            parentActivity.supportFragmentManager
+//                .beginTransaction()
+//                .replace(R.id.item_detail_container, fragment)
+//                .commit()
+//        } else {
+//            val intent = Intent(v.context, DeliveryDetailActivity::class.java).apply {
+//                putExtra(DeliveryDetailFragment.ARG_ITEM_ID, item.id)
+//            }
+//            v.context.startActivity(intent)
+//        }
     }
 }

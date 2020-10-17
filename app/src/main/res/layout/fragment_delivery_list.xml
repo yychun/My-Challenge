@@ -7,4 +7,4 @@
     android:layout_height="match_parent"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.yychun1217.mychallenge.ui.DeliveryListActivity"
-    tools:listitem="@layout/delivery_list_item" />
+    tools:listitem="@layout/view_delivery_list_item" />
