@@ -42,7 +42,7 @@ class DeliveryListFragment : Fragment() {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             val deliveryAdapter = DeliveryAdapter { view, delivery ->
                 view.findNavController()
-                    .navigate(DeliveryListFragmentDirections.deliveryListToDetail(delivery))
+                    .navigate(DeliveryListFragmentDirections.deliveryListToDetail(delivery.id))
             }.apply {
                 addLoadStateListener { loadState ->
                     Timber.d("DeliveryAdapter.loadState: $loadState")

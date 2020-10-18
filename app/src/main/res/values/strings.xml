@@ -15,5 +15,6 @@
     <string name="delivery_detail_goods_to_deliver">Goods to Deliver</string>
     <string name="delivery_detail_price">$%.2f</string>
     <string name="delivery_detail_remarks">Remarks</string>
+    <string name="delivery_detail_remove_from_favourite">Remove from Favourite</string>
     <string name="delivery_detail_to">To</string>
 </resources>

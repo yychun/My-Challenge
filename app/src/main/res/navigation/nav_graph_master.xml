@@ -14,8 +14,8 @@
             android:id="@+id/delivery_list_to_detail"
             app:destination="@+id/fragment_delivery_detail">
             <argument
-                android:name="delivery"
-                app:argType="com.yychun1217.mychallenge.model.Delivery$Ui"
+                android:name="id"
+                app:argType="string"
                 app:nullable="false" />
         </action>
     </fragment>

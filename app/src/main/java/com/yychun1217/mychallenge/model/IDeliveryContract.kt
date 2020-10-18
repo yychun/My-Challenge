@@ -1,12 +1,10 @@
 package com.yychun1217.mychallenge.model
 
-import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.yychun1217.pagination.model.EntityType
 import com.yychun1217.pagination.model.IEntityContract
-import kotlinx.android.parcel.Parcelize
 
 interface IDeliveryContract {
     data class Api(
@@ -46,7 +44,6 @@ interface IDeliveryContract {
             }
     }
 
-    @Parcelize
     data class Ui(
         val deliveryFee: Float,
         val from: String,
@@ -56,24 +53,49 @@ interface IDeliveryContract {
         val goodsPicture: String,
         val surcharge: Float,
         val to: String,
-    ) : IEntityContract.Ui, Parcelable {
+    ) : IEntityContract.Ui {
         val price: Float
             get() = deliveryFee + surcharge
+
+        override fun <ENTITY : IEntityContract<EntityType>> toEntity(type: EntityType): ENTITY? {
+            return when (type) {
+                EntityType.DB -> Db(
+                    id = id,
+                    deliveryFee = deliveryFee,
+                    from = from,
+                    isFavourite = isFavourite,
+                    remarks = remarks,
+                    goodsPicture = goodsPicture,
+                    surcharge = surcharge,
+                    to = to
+                ) as ENTITY
+                else -> super.toEntity(type)
+            }
+        }
     }
 
     @Entity(tableName = Db.NAME_DB_TABLE)
     data class Db(
-        @PrimaryKey val id: String,
-        @ColumnInfo(name = "delivery_fee") val deliveryFee: Float,
-        @ColumnInfo(name = "route_from") val from: String,
-        @ColumnInfo(name = "is_favourite") val isFavourite: Boolean,
-        @ColumnInfo(name = "remarks") val remarks: String,
-        @ColumnInfo(name = "goods_picture") val goodsPicture: String,
-        @ColumnInfo(name = "surcharge") val surcharge: Float,
-        @ColumnInfo(name = "route_to") val to: String,
+        @ColumnInfo(name = COLUMN_ID) @PrimaryKey val id: String,
+        @ColumnInfo(name = COLUMN_DELIVERY_FEE) val deliveryFee: Float,
+        @ColumnInfo(name = COLUMN_ROUTE_FROM) val from: String,
+        @ColumnInfo(name = COLUMN_IS_FAVOURITE) val isFavourite: Boolean,
+        @ColumnInfo(name = COLUMN_REMARKS) val remarks: String,
+        @ColumnInfo(name = COLUMN_GOODS_PICTURE) val goodsPicture: String,
+        @ColumnInfo(name = COLUMN_SURCHARGE) val surcharge: Float,
+        @ColumnInfo(name = COLUMN_ROUTE_TO) val to: String,
     ) : IEntityContract.Db {
         companion object {
             const val NAME_DB_TABLE = "Delivery"
+
+            const val COLUMN_ID = "id"
+            const val COLUMN_DELIVERY_FEE = "delivery_fee"
+            const val COLUMN_ROUTE_FROM = "route_from"
+            const val COLUMN_IS_FAVOURITE = "is_favourite"
+            const val COLUMN_REMARKS = "remarks"
+            const val COLUMN_GOODS_PICTURE = "goods_picture"
+            const val COLUMN_SURCHARGE = "surcharge"
+            const val COLUMN_ROUTE_TO = "route_to"
         }
 
         @Suppress("UNCHECKED_CAST")
