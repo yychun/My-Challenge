@@ -2,18 +2,18 @@ package com.yychun1217.mychallenge.datasource.local
 
 import android.database.sqlite.SQLiteConstraintException
 import com.yychun1217.mychallenge.db.DeliveryDao
-import com.yychun1217.mychallenge.model.Delivery
+import com.yychun1217.mychallenge.model.IDeliveryContract
 import com.yychun1217.mychallenge.model.request.GetDeliveryRequest
 import com.yychun1217.pagination.datasource.ILocalPagingSource
 import timber.log.Timber
 
 class DeliveryLocalPagingSource(
     private val deliveryDao: DeliveryDao
-) : ILocalPagingSource<GetDeliveryRequest, Delivery.Db> {
+) : ILocalPagingSource<GetDeliveryRequest, IDeliveryContract.Db> {
     override suspend fun insert(
         key: GetDeliveryRequest,
-        page: List<Delivery.Db>
-    ): List<Delivery.Db> {
+        page: List<IDeliveryContract.Db>
+    ): List<IDeliveryContract.Db> {
         return try {
             deliveryDao.insertAll(*page.toTypedArray())
             page
@@ -31,6 +31,6 @@ class DeliveryLocalPagingSource(
         }
     }
 
-    override suspend fun loadPage(key: GetDeliveryRequest): List<Delivery.Db> =
+    override suspend fun loadPage(key: GetDeliveryRequest): List<IDeliveryContract.Db> =
         deliveryDao.getAll(key.offset, key.limit)
 }

@@ -4,11 +4,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.yychun1217.mychallenge.model.Delivery
+import com.yychun1217.mychallenge.model.IDeliveryContract
 
 class DeliveryAdapter(
-    private val onClick: (view: View, delivery: Delivery.Ui) -> Unit
-) : PagingDataAdapter<Delivery.Ui, DeliveryItemViewHolder>(ITEM_COMPARATOR) {
+    private val onClick: (view: View, delivery: IDeliveryContract.Ui) -> Unit
+) : PagingDataAdapter<IDeliveryContract.Ui, DeliveryItemViewHolder>(ITEM_COMPARATOR) {
 
     override fun onBindViewHolder(holder: DeliveryItemViewHolder, position: Int) {
         getItem(position)?.let {
@@ -21,15 +21,15 @@ class DeliveryAdapter(
     }
 
     companion object {
-        val ITEM_COMPARATOR = object : DiffUtil.ItemCallback<Delivery.Ui>() {
+        val ITEM_COMPARATOR = object : DiffUtil.ItemCallback<IDeliveryContract.Ui>() {
             override fun areContentsTheSame(
-                oldItem: Delivery.Ui,
-                newItem: Delivery.Ui
+                oldItem: IDeliveryContract.Ui,
+                newItem: IDeliveryContract.Ui
             ): Boolean = oldItem == newItem
 
             override fun areItemsTheSame(
-                oldItem: Delivery.Ui,
-                newItem: Delivery.Ui
+                oldItem: IDeliveryContract.Ui,
+                newItem: IDeliveryContract.Ui
             ): Boolean = oldItem.id == newItem.id
         }
     }

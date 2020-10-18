@@ -1,6 +1,6 @@
 package com.yychun1217.mychallenge.datasource
 
-import com.yychun1217.mychallenge.model.Delivery
+import com.yychun1217.mychallenge.model.IDeliveryContract
 import com.yychun1217.mychallenge.model.request.GetDeliveryRequest
 import com.yychun1217.pagination.datasource.ILocalPagingSource
 import com.yychun1217.pagination.datasource.IRemotePagingSource
@@ -9,9 +9,9 @@ import kotlin.math.max
 
 abstract class AbstractDeliveryMergedPagingSource(
     val config: Config,
-    local: ILocalPagingSource<GetDeliveryRequest, Delivery.Db>,
-    remote: IRemotePagingSource<GetDeliveryRequest, Delivery.Api>
-) : AbstractMergedPagingSource<GetDeliveryRequest, Delivery.Db, Delivery.Api, Delivery.Ui>(
+    local: ILocalPagingSource<GetDeliveryRequest, IDeliveryContract.Db>,
+    remote: IRemotePagingSource<GetDeliveryRequest, IDeliveryContract.Api>
+) : AbstractMergedPagingSource<GetDeliveryRequest, IDeliveryContract.Db, IDeliveryContract.Api, IDeliveryContract.Ui>(
     local,
     remote
 ) {

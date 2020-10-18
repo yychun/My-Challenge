@@ -6,7 +6,7 @@ import com.yychun1217.mychallenge.datasource.local.DeliveryLocalPagingSource
 import com.yychun1217.mychallenge.datasource.DeliveryMergedPagingSource
 import com.yychun1217.mychallenge.datasource.remote.DeliveryRemotePagingSource
 import com.yychun1217.mychallenge.db.DeliveryDao
-import com.yychun1217.mychallenge.model.Delivery
+import com.yychun1217.mychallenge.model.IDeliveryContract
 import com.yychun1217.mychallenge.model.request.GetDeliveryRequest
 import com.yychun1217.pagination.datasource.ILocalPagingSource
 import com.yychun1217.pagination.datasource.IRemotePagingSource
@@ -24,20 +24,20 @@ class DataSourceModule {
     @Inject
     fun provideILocalPagingSource(
         deliveryDao: DeliveryDao
-    ): ILocalPagingSource<GetDeliveryRequest, Delivery.Db> =
+    ): ILocalPagingSource<GetDeliveryRequest, IDeliveryContract.Db> =
         DeliveryLocalPagingSource(deliveryDao)
 
     @Provides
     @Inject
     fun provideIRemotePagingSource(
         service: DeliveryService
-    ): IRemotePagingSource<GetDeliveryRequest, Delivery.Api> = DeliveryRemotePagingSource(service)
+    ): IRemotePagingSource<GetDeliveryRequest, IDeliveryContract.Api> = DeliveryRemotePagingSource(service)
 
     @Provides
     @Inject
     fun provideDeliveryMergedPagingSource(
-        local: ILocalPagingSource<GetDeliveryRequest, Delivery.Db>,
-        remote: IRemotePagingSource<GetDeliveryRequest, Delivery.Api>
+        local: ILocalPagingSource<GetDeliveryRequest, IDeliveryContract.Db>,
+        remote: IRemotePagingSource<GetDeliveryRequest, IDeliveryContract.Api>
     ): AbstractDeliveryMergedPagingSource = DeliveryMergedPagingSource(
         AbstractDeliveryMergedPagingSource.Companion.Config(0, 20),
         local,

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.yychun1217.mychallenge.databinding.FragmentDeliveryDetailBinding
-import com.yychun1217.mychallenge.model.Delivery
+import com.yychun1217.mychallenge.model.IDeliveryContract
 import com.yychun1217.mychallenge.viewmodel.DeliveryDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -39,7 +39,7 @@ class DeliveryDetailFragment : Fragment() {
                 setGoodsPicture(it.goodsPicture)
             }
         }
-        arguments?.getParcelable<Delivery.Ui>(KEY_DELIVERY)?.let {
+        arguments?.getParcelable<IDeliveryContract.Ui>(KEY_DELIVERY)?.let {
             viewModel.setDetail(it)
         }
     }

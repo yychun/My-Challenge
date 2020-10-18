@@ -10,21 +10,21 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.yychun1217.mychallenge.R
 import com.yychun1217.mychallenge.databinding.ViewDeliveryListItemBinding
-import com.yychun1217.mychallenge.model.Delivery
+import com.yychun1217.mychallenge.model.IDeliveryContract
 
 class DeliveryItemViewHolder(
     private val binding: ViewDeliveryListItemBinding,
-    onClick: (view: View, delivery: Delivery.Ui) -> Unit
+    onClick: (view: View, delivery: IDeliveryContract.Ui) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
     init {
         itemView.setOnClickListener {
-            (it.tag as? Delivery.Ui)?.let { delivery ->
+            (it.tag as? IDeliveryContract.Ui)?.let { delivery ->
                 onClick.invoke(it, delivery)
             }
         }
     }
 
-    fun bind(position: Int, data: Delivery.Ui) {
+    fun bind(position: Int, data: IDeliveryContract.Ui) {
         with(itemView.context) {
             Glide.with(this).load(data.goodsPicture)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -42,7 +42,7 @@ class DeliveryItemViewHolder(
     }
 
     companion object {
-        fun create(parent: ViewGroup, onClick: (view: View, delivery: Delivery.Ui) -> Unit): DeliveryItemViewHolder {
+        fun create(parent: ViewGroup, onClick: (view: View, delivery: IDeliveryContract.Ui) -> Unit): DeliveryItemViewHolder {
             return DeliveryItemViewHolder(
                 ViewDeliveryListItemBinding.inflate(
                     LayoutInflater.from(

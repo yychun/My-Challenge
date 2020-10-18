@@ -8,7 +8,7 @@ import com.yychun1217.pagination.model.EntityType
 import com.yychun1217.pagination.model.IEntity
 import kotlinx.android.parcel.Parcelize
 
-interface Delivery {
+interface IDeliveryContract {
     data class Api(
         val deliveryFee: String,
         val goodsPicture: String,
