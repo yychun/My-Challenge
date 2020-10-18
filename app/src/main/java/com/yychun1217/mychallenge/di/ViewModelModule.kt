@@ -1,5 +1,6 @@
 package com.yychun1217.mychallenge.di
 
+import com.yychun1217.mychallenge.datasource.local.IDeliveryLocalRepository
 import com.yychun1217.mychallenge.pagingsource.AbstractDeliveryMergedPagingSource
 import com.yychun1217.mychallenge.viewmodel.DeliveryDetailViewModel
 import com.yychun1217.mychallenge.viewmodel.DeliveryListViewModel
@@ -23,5 +24,7 @@ class ViewModelModule {
     @Provides
     @FragmentScoped
     @Inject
-    fun provideDeliveryDetailViewModel() = DeliveryDetailViewModel()
+    fun provideDeliveryDetailViewModel(
+        iDeliveryLocalRepository: IDeliveryLocalRepository
+    ) = DeliveryDetailViewModel(iDeliveryLocalRepository)
 }
