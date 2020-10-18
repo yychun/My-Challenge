@@ -20,4 +20,6 @@ class DeliveryListViewModel @ViewModelInject constructor(
     ) {
         merged
     }.flow.cachedIn(viewModelScope)
+
+    var prevScrollPosition: Int? = null
 }

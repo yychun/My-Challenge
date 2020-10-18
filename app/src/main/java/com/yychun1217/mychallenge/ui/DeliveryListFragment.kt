@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yychun1217.mychallenge.R
 import com.yychun1217.mychallenge.databinding.FragmentDeliveryListBinding
 import com.yychun1217.mychallenge.ui.navigation.navigate
@@ -20,6 +21,10 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class DeliveryListFragment : Fragment() {
+    companion object {
+        const val KEY_SCROLL_POSITION = "KEY_FIRST_VISIBLE_ITEM_POSITION"
+    }
+
     @Inject
     lateinit var viewModel: DeliveryListViewModel
     private lateinit var binding: FragmentDeliveryListBinding
@@ -38,6 +43,26 @@ class DeliveryListFragment : Fragment() {
         initViews()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val scrollPosition = (binding.listDelivery.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+        outState.putInt(KEY_SCROLL_POSITION, scrollPosition)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        savedInstanceState?.getInt(KEY_SCROLL_POSITION)?.let {
+            viewModel.prevScrollPosition = it
+        }
+    }
+
+    private fun restoreScrollPosition() {
+        viewModel.prevScrollPosition?.let {
+            binding.listDelivery.scrollToPosition(it)
+            viewModel.prevScrollPosition = null
+        }
+    }
+
     private fun initViews() {
         binding.listDelivery.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
@@ -50,6 +75,7 @@ class DeliveryListFragment : Fragment() {
                 addLoadStateListener { loadState ->
                     Timber.d("DeliveryAdapter.loadState: $loadState")
                     if (loadState.refresh is LoadState.NotLoading) {
+                        restoreScrollPosition()
                         binding.listDelivery.visibility = View.VISIBLE
                     } else {
                         binding.listDelivery.visibility = View.GONE
