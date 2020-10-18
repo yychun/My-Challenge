@@ -1,5 +1,8 @@
 package com.yychun1217.mychallenge.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.yychun1217.pagination.model.EntityType
 import com.yychun1217.pagination.model.IEntity
 
@@ -55,16 +58,21 @@ interface Delivery {
             get() = deliveryFee + surcharge
     }
 
+    @Entity(tableName = Db.NAME_DB_TABLE)
     data class Db(
-        val deliveryFee: Float,
-        val from: String,
-        val id: String,
-        val isFavourite: Boolean,
-        val remarks: String,
-        val goodsPicture: String,
-        val surcharge: Float,
-        val to: String,
+        @PrimaryKey val id: String,
+        @ColumnInfo(name = "delivery_fee") val deliveryFee: Float,
+        @ColumnInfo(name = "route_from") val from: String,
+        @ColumnInfo(name = "is_favourite") val isFavourite: Boolean,
+        @ColumnInfo(name = "remarks") val remarks: String,
+        @ColumnInfo(name = "goods_picture") val goodsPicture: String,
+        @ColumnInfo(name = "surcharge") val surcharge: Float,
+        @ColumnInfo(name = "route_to") val to: String,
     ) : IEntity.Db {
+        companion object {
+            const val NAME_DB_TABLE = "Delivery"
+        }
+
         @Suppress("UNCHECKED_CAST")
         override fun <ENTITY : IEntity<EntityType>> toEntity(type: EntityType): ENTITY? =
             when (type) {

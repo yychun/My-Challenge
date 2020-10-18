@@ -5,6 +5,7 @@ import com.yychun1217.mychallenge.datasource.AbstractDeliveryMergedPagingSource
 import com.yychun1217.mychallenge.datasource.local.DeliveryLocalPagingSource
 import com.yychun1217.mychallenge.datasource.DeliveryMergedPagingSource
 import com.yychun1217.mychallenge.datasource.remote.DeliveryRemotePagingSource
+import com.yychun1217.mychallenge.db.DeliveryDao
 import com.yychun1217.mychallenge.model.Delivery
 import com.yychun1217.mychallenge.model.request.GetDeliveryRequest
 import com.yychun1217.pagination.datasource.ILocalPagingSource
@@ -20,8 +21,11 @@ import javax.inject.Inject
 class DataSourceModule {
 
     @Provides
-    fun provideILocalPagingSource(): ILocalPagingSource<GetDeliveryRequest, Delivery.Db> =
-        DeliveryLocalPagingSource()
+    @Inject
+    fun provideILocalPagingSource(
+        deliveryDao: DeliveryDao
+    ): ILocalPagingSource<GetDeliveryRequest, Delivery.Db> =
+        DeliveryLocalPagingSource(deliveryDao)
 
     @Provides
     @Inject

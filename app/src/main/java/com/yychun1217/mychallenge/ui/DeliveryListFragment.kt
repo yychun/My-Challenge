@@ -13,6 +13,7 @@ import com.yychun1217.mychallenge.viewmodel.DeliveryListViewModel
 import com.yychun1217.pagination.ui.PaginationLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -40,6 +41,7 @@ class DeliveryListFragment : Fragment() {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             val deliveryAdapter = DeliveryAdapter().apply {
                 addLoadStateListener { loadState ->
+                    Timber.d("DeliveryAdapter.loadState: $loadState")
                     if (loadState.refresh is LoadState.NotLoading) {
                         binding.listDelivery.visibility = View.VISIBLE
                     } else {

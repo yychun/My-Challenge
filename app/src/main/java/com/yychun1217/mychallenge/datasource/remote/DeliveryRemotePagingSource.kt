@@ -8,6 +8,6 @@ import com.yychun1217.pagination.datasource.IRemotePagingSource
 class DeliveryRemotePagingSource(
     private val service: DeliveryService
 ) : IRemotePagingSource<GetDeliveryRequest, Delivery.Api> {
-    override suspend fun loadPage(key: GetDeliveryRequest): List<Delivery.Api>? =
+    override suspend fun loadPage(key: GetDeliveryRequest): List<Delivery.Api> =
         service.getDeliveries(key.offset, key.limit)
 }

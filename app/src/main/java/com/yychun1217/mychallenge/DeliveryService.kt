@@ -9,5 +9,5 @@ interface DeliveryService {
     suspend fun getDeliveries(
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
-    ): List<Delivery.Api>?
+    ): List<Delivery.Api>
 }

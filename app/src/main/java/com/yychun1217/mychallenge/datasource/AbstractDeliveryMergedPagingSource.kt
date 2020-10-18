@@ -28,15 +28,12 @@ abstract class AbstractDeliveryMergedPagingSource(
     )
 
     override fun getPrevKey(
-        key: GetDeliveryRequest,
-        pageSize: Int
-    ): GetDeliveryRequest? = key.takeIf { it.limit == pageSize && it.offset > 0 }?.copy(
+        key: GetDeliveryRequest
+    ): GetDeliveryRequest? = key.takeIf { it.offset > 0 }?.copy(
         offset = max(key.offset - key.limit, 0)
     )
 
     override fun getNextKey(
-        key: GetDeliveryRequest,
-        pageSize: Int
-    ): GetDeliveryRequest? =
-        key.takeIf { it.limit == pageSize }?.copy(offset = key.offset + key.limit)
+        key: GetDeliveryRequest
+    ): GetDeliveryRequest? = key.copy(offset = key.offset + key.limit)
 }

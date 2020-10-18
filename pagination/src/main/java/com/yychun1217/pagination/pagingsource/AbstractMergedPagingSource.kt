@@ -6,6 +6,7 @@ import com.yychun1217.pagination.datasource.IMergedPagingSource
 import com.yychun1217.pagination.datasource.IRemotePagingSource
 import com.yychun1217.pagination.model.EntityType
 import com.yychun1217.pagination.model.IEntity
+import timber.log.Timber
 
 abstract class AbstractMergedPagingSource<KEY : Any, DB : IEntity.Db, API : IEntity.Api, UI : IEntity.Ui>(
     override val local: ILocalPagingSource<KEY, DB>,
@@ -14,18 +15,38 @@ abstract class AbstractMergedPagingSource<KEY : Any, DB : IEntity.Db, API : IEnt
     override suspend fun load(params: LoadParams<KEY>): LoadResult<KEY, UI> {
         return try {
             val key = params.key ?: getFirstKey()
-            val page = local.loadPage(key) ?: remote.loadPage(key)?.apply {
-                local.insert(key, this.mapNotNull { it.toEntity(EntityType.DB) })
-            }
-            page?.mapNotNull { it.toEntity(EntityType.UI) as? UI }.orEmpty().let {
-                LoadResult.Page(it, getPrevKey(key, it.size), getNextKey(key, it.size))
+            val localPage = local.loadPage(key)
+            if (localPage.isNotEmpty()) {
+                mapToLoadResult(key, localPage, true)
+            } else {
+                val remotePage = remote.loadPage(key)
+                val isRemotePaginationEndReached = remotePage.isEmpty()
+                val page = if (remotePage.isNotEmpty()) {
+                    local.insert(key, remotePage.mapNotNull { it.toEntity(EntityType.DB) })
+                } else emptyList()
+                mapToLoadResult(key, page, !isRemotePaginationEndReached)
             }
         } catch (e: Exception) {
+            Timber.e(e)
             LoadResult.Error(e)
         }
     }
 
+    private fun mapToLoadResult(
+        key: KEY,
+        page: List<DB>,
+        isGetNextKey: Boolean
+    ): LoadResult<KEY, UI> {
+        return page.mapNotNull { it.toEntity(EntityType.UI) as? UI }.let {
+            LoadResult.Page(
+                it,
+                getPrevKey(key),
+                if (isGetNextKey) getNextKey(key) else null
+            )
+        }
+    }
+
     abstract fun getFirstKey(): KEY
-    abstract fun getPrevKey(key: KEY, pageSize: Int): KEY?
-    abstract fun getNextKey(key: KEY, pageSize: Int): KEY?
+    abstract fun getPrevKey(key: KEY): KEY?
+    abstract fun getNextKey(key: KEY): KEY?
 }
