@@ -19,7 +19,7 @@ class DeliveryLocalRepositoryTest : BaseTestCase() {
     private lateinit var iDeliveryLocalDataSource: IDeliveryLocalDataSource
 
     @Before
-    fun createDeliveryLocalRepository() {
+    fun setup() {
         deliverLocalRepository = DeliveryLocalRepository(iDeliveryLocalDataSource)
     }
 

@@ -23,7 +23,7 @@ class DeliveryLocalDataSourceTest : BaseTestCase() {
     private lateinit var deliveryDao: DeliveryDao
 
     @Before
-    fun createDeliveryLocalDataSource() {
+    fun setup() {
         deliverLocalDataSource = DeliveryLocalDataSource(deliveryDao)
     }
 
