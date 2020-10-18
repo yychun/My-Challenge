@@ -7,4 +7,13 @@
     <string name="delivery_list_from">From: %s</string>
     <string name="delivery_list_to">To: %s</string>
     <string name="delivery_list_price">$%.2f</string>
+
+    <!-- delivery detail -->
+    <string name="delivery_detail_add_to_favourite">Add to Favourite</string>
+    <string name="delivery_detail_delivery_fee">Delivery Fee</string>
+    <string name="delivery_detail_from">From</string>
+    <string name="delivery_detail_goods_to_deliver">Goods to Deliver</string>
+    <string name="delivery_detail_price">$%.2f</string>
+    <string name="delivery_detail_remarks">Remarks</string>
+    <string name="delivery_detail_to">To</string>
 </resources>
