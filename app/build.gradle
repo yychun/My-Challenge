@@ -41,9 +41,13 @@ android {
     // Android Studio 4.0
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 //    // Available in Android Gradle Plugin 3.6.0
 //    viewBinding {
+//        enabled = true
+//    }
+//    dataBinding {
 //        enabled = true
 //    }
 
