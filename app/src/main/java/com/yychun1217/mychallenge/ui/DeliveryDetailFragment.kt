@@ -1,5 +1,7 @@
 package com.yychun1217.mychallenge.ui
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -59,6 +61,7 @@ class DeliveryDetailFragment : Fragment() {
             Glide.with(this)
                 .load(pictureUrl)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(ColorDrawable(Color.TRANSPARENT))
                 .into(this)
             tag = pictureUrl
         }

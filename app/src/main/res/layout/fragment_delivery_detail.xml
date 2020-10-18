@@ -7,6 +7,8 @@
             name="viewModel"
             type="com.yychun1217.mychallenge.viewmodel.DeliveryDetailViewModel" />
 
+        <import type="android.view.View" />
+
         <import type="com.yychun1217.mychallenge.util.Converter" />
     </data>
 
@@ -16,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/margin_small"
+        android:visibility="@{viewModel.delivery == null ? View.GONE : View.VISIBLE}"
         tools:context=".ui.DeliveryDetailFragment">
 
         <Button
@@ -48,7 +51,7 @@
                     android:layout_marginStart="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginEnd="@dimen/margin_small"
-                    android:background="@android:color/darker_gray"
+                    android:background="@color/colorContentBackground"
                     android:padding="@dimen/margin_small"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +86,7 @@
                     android:layout_marginStart="@dimen/margin_small"
                     android:layout_marginEnd="@dimen/margin_small"
                     android:layout_marginBottom="@dimen/margin_small"
-                    android:background="@android:color/darker_gray"
+                    android:background="@color/colorContentBackground"
                     android:padding="@dimen/margin_small"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +121,7 @@
                     android:layout_margin="@dimen/margin_small"
                     android:layout_marginStart="@dimen/margin_small"
                     android:layout_marginEnd="@dimen/margin_small"
-                    android:background="@android:color/darker_gray"
+                    android:background="@color/colorContentBackground"
                     android:padding="@dimen/margin_small"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -137,7 +140,7 @@
                     <ImageView
                         android:id="@+id/image_delivery_detail_goods"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         app:layout_constraintDimensionRatio="4:3"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -151,7 +154,7 @@
                     android:layout_marginStart="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginEnd="@dimen/margin_small"
-                    android:background="@android:color/darker_gray"
+                    android:background="@color/colorContentBackground"
                     android:padding="@dimen/margin_small"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -185,7 +188,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_small"
-                    android:background="@android:color/darker_gray"
+                    android:background="@color/colorContentBackground"
                     android:padding="@dimen/margin_small"
                     android:text="@{viewModel.delivery.remarks}"
                     android:textIsSelectable="true"
