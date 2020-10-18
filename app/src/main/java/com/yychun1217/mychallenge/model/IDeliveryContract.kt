@@ -1,6 +1,7 @@
 package com.yychun1217.mychallenge.model
 
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.yychun1217.pagination.model.EntityType
@@ -30,16 +31,17 @@ interface IDeliveryContract {
                     surcharge = surcharge.substring(1).toFloat(),
                     to = route.end
                 ) as ENTITY
-                EntityType.DB -> Db(
-                    deliveryFee = deliveryFee.substring(1).toFloat(),
-                    from = route.start,
-                    id = id,
-                    isFavourite = false,
-                    remarks = remarks,
-                    goodsPicture = goodsPicture,
-                    surcharge = surcharge.substring(1).toFloat(),
-                    to = route.end
-                ) as ENTITY
+                EntityType.DB -> (route.toEntity(EntityType.DB) as? IDeliveryRouteContract.Db)?.let {
+                    Db(
+                        deliveryFee = deliveryFee.substring(1).toFloat(),
+                        route = it,
+                        id = id,
+                        isFavourite = false,
+                        remarks = remarks,
+                        goodsPicture = goodsPicture,
+                        surcharge = surcharge.substring(1).toFloat(),
+                    ) as ENTITY
+                }
                 else -> super.toEntity(type)
             }
     }
@@ -62,12 +64,11 @@ interface IDeliveryContract {
                 EntityType.DB -> Db(
                     id = id,
                     deliveryFee = deliveryFee,
-                    from = from,
+                    route = IDeliveryRouteContract.Db(from, to),
                     isFavourite = isFavourite,
                     remarks = remarks,
                     goodsPicture = goodsPicture,
                     surcharge = surcharge,
-                    to = to
                 ) as ENTITY
                 else -> super.toEntity(type)
             }
@@ -76,26 +77,23 @@ interface IDeliveryContract {
 
     @Entity(tableName = Db.NAME_DB_TABLE)
     data class Db(
-        @ColumnInfo(name = COLUMN_ID) @PrimaryKey val id: String,
+        @PrimaryKey
+        @ColumnInfo(name = COLUMN_ID) val id: String,
         @ColumnInfo(name = COLUMN_DELIVERY_FEE) val deliveryFee: Float,
-        @ColumnInfo(name = COLUMN_ROUTE_FROM) val from: String,
+        @Embedded val route: IDeliveryRouteContract.Db,
         @ColumnInfo(name = COLUMN_IS_FAVOURITE) val isFavourite: Boolean,
         @ColumnInfo(name = COLUMN_REMARKS) val remarks: String,
         @ColumnInfo(name = COLUMN_GOODS_PICTURE) val goodsPicture: String,
         @ColumnInfo(name = COLUMN_SURCHARGE) val surcharge: Float,
-        @ColumnInfo(name = COLUMN_ROUTE_TO) val to: String,
     ) : IEntityContract.Db {
         companion object {
-            const val NAME_DB_TABLE = "Delivery"
-
-            const val COLUMN_ID = "id"
+            const val NAME_DB_TABLE = "delivery"
+            const val COLUMN_ID = "${NAME_DB_TABLE}_id"
             const val COLUMN_DELIVERY_FEE = "delivery_fee"
-            const val COLUMN_ROUTE_FROM = "route_from"
             const val COLUMN_IS_FAVOURITE = "is_favourite"
             const val COLUMN_REMARKS = "remarks"
             const val COLUMN_GOODS_PICTURE = "goods_picture"
             const val COLUMN_SURCHARGE = "surcharge"
-            const val COLUMN_ROUTE_TO = "route_to"
         }
 
         @Suppress("UNCHECKED_CAST")
@@ -103,13 +101,13 @@ interface IDeliveryContract {
             when (type) {
                 EntityType.UI -> Ui(
                     deliveryFee = deliveryFee,
-                    from = from,
+                    from = route.from,
                     id = id,
                     isFavourite = isFavourite,
                     remarks = remarks,
                     goodsPicture = goodsPicture,
                     surcharge = surcharge,
-                    to = to
+                    to = route.to
                 ) as ENTITY
                 else -> super.toEntity(type)
             }
