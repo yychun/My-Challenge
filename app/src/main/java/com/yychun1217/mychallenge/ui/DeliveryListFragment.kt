@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yychun1217.mychallenge.R
 import com.yychun1217.mychallenge.databinding.FragmentDeliveryListBinding
+import com.yychun1217.mychallenge.model.ViewState
+import com.yychun1217.mychallenge.model.toViewState
 import com.yychun1217.mychallenge.ui.navigation.navigate
 import com.yychun1217.mychallenge.viewmodel.DeliveryListViewModel
 import com.yychun1217.pagination.ui.PaginationLoadStateAdapter
@@ -45,7 +46,8 @@ class DeliveryListFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        val scrollPosition = (binding.listDelivery.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+        val scrollPosition =
+            (binding.listDelivery.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
         outState.putInt(KEY_SCROLL_POSITION, scrollPosition)
     }
 
@@ -63,6 +65,11 @@ class DeliveryListFragment : Fragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        activity?.actionBar?.title = getString(R.string.label_delivery_list)
+    }
+
     private fun initViews() {
         binding.listDelivery.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
@@ -73,13 +80,8 @@ class DeliveryListFragment : Fragment() {
                 )
             }.apply {
                 addLoadStateListener { loadState ->
-                    Timber.d("DeliveryAdapter.loadState: $loadState")
-                    if (loadState.refresh is LoadState.NotLoading) {
-                        restoreScrollPosition()
-                        binding.listDelivery.visibility = View.VISIBLE
-                    } else {
-                        binding.listDelivery.visibility = View.GONE
-                    }
+                    Timber.d("deliveryList.loadState: $loadState")
+                    onNewViewState(loadState.toViewState())
                 }
             }
 
@@ -92,6 +94,49 @@ class DeliveryListFragment : Fragment() {
             adapter = deliveryAdapter.withLoadStateFooter(PaginationLoadStateAdapter {
                 deliveryAdapter.retry()
             })
+
+            binding.buttonErrorRetry.setOnClickListener {
+                deliveryAdapter.retry()
+            }
+        }
+        onNewViewState(ViewState.Loading(true))
+    }
+
+    private fun onNewViewState(viewState: ViewState) {
+        Timber.d("deliveryList.viewState: $viewState")
+        when (viewState) {
+            is ViewState.Loading -> {
+                binding.layoutError.visibility = View.GONE
+                if (viewState.isEmpty) {
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.textEmpty.visibility = View.GONE
+                    binding.listDelivery.visibility = View.GONE
+                } else {
+                    binding.listDelivery.visibility = View.VISIBLE
+                    binding.textEmpty.visibility = View.GONE
+                    binding.progressBar.visibility = View.GONE
+                }
+            }
+            is ViewState.Error -> {
+                binding.progressBar.visibility = View.GONE
+                if (viewState.isEmpty) {
+                    binding.textError.text = viewState.error.localizedMessage
+                    binding.layoutError.visibility = View.VISIBLE
+                    binding.textEmpty.visibility = View.GONE
+                    binding.listDelivery.visibility = View.GONE
+                } else {
+                    binding.listDelivery.visibility = View.VISIBLE
+                    binding.textEmpty.visibility = View.GONE
+                    binding.layoutError.visibility = View.GONE
+                }
+            }
+            ViewState.NotLoading -> {
+                restoreScrollPosition()
+                binding.listDelivery.visibility = View.VISIBLE
+                binding.textEmpty.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
+                binding.layoutError.visibility = View.GONE
+            }
         }
     }
 }

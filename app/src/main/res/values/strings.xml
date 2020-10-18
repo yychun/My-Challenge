@@ -7,6 +7,8 @@
     <string name="delivery_list_from">From: %s</string>
     <string name="delivery_list_to">To: %s</string>
     <string name="delivery_list_price">$%.2f</string>
+    <string name="delivery_list_empty">Empty vessels make the most noise</string>
+    <string name="delivery_list_retry">Retry</string>
 
     <!-- delivery detail -->
     <string name="delivery_detail_add_to_favourite">Add to Favourite</string>
