@@ -5,7 +5,7 @@ import androidx.lifecycle.*
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.yychun1217.mychallenge.datasource.AbstractDeliveryMergedPagingSource
+import com.yychun1217.mychallenge.pagingsource.AbstractDeliveryMergedPagingSource
 
 class DeliveryListViewModel @ViewModelInject constructor(
     merged: AbstractDeliveryMergedPagingSource

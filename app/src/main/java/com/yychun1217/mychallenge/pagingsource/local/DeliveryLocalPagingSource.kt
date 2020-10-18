@@ -1,10 +1,10 @@
-package com.yychun1217.mychallenge.datasource.local
+package com.yychun1217.mychallenge.pagingsource.local
 
 import android.database.sqlite.SQLiteConstraintException
 import com.yychun1217.mychallenge.db.DeliveryDao
 import com.yychun1217.mychallenge.model.IDeliveryContract
 import com.yychun1217.mychallenge.model.request.GetDeliveryRequest
-import com.yychun1217.pagination.datasource.ILocalPagingSource
+import com.yychun1217.pagination.pagingsource.ILocalPagingSource
 import timber.log.Timber
 
 class DeliveryLocalPagingSource(

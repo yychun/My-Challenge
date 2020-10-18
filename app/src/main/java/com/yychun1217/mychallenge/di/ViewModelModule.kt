@@ -1,6 +1,6 @@
 package com.yychun1217.mychallenge.di
 
-import com.yychun1217.mychallenge.datasource.AbstractDeliveryMergedPagingSource
+import com.yychun1217.mychallenge.pagingsource.AbstractDeliveryMergedPagingSource
 import com.yychun1217.mychallenge.viewmodel.DeliveryDetailViewModel
 import com.yychun1217.mychallenge.viewmodel.DeliveryListViewModel
 import dagger.Module

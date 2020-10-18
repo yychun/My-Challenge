@@ -1,9 +1,9 @@
-package com.yychun1217.mychallenge.datasource.remote
+package com.yychun1217.mychallenge.pagingsource.remote
 
 import com.yychun1217.mychallenge.DeliveryService
 import com.yychun1217.mychallenge.model.IDeliveryContract
 import com.yychun1217.mychallenge.model.request.GetDeliveryRequest
-import com.yychun1217.pagination.datasource.IRemotePagingSource
+import com.yychun1217.pagination.pagingsource.IRemotePagingSource
 
 class DeliveryRemotePagingSource(
     private val service: DeliveryService

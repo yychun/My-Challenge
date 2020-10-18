@@ -1,4 +1,4 @@
-package com.yychun1217.pagination.datasource
+package com.yychun1217.pagination.pagingsource
 
 import com.yychun1217.pagination.model.IEntityContract
 

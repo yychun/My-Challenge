@@ -1,9 +1,6 @@
 package com.yychun1217.pagination.pagingsource
 
 import androidx.paging.PagingSource
-import com.yychun1217.pagination.datasource.ILocalPagingSource
-import com.yychun1217.pagination.datasource.IMergedPagingSource
-import com.yychun1217.pagination.datasource.IRemotePagingSource
 import com.yychun1217.pagination.model.EntityType
 import com.yychun1217.pagination.model.IEntityContract
 import timber.log.Timber

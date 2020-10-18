@@ -1,9 +1,9 @@
-package com.yychun1217.mychallenge.datasource
+package com.yychun1217.mychallenge.pagingsource
 
 import com.yychun1217.mychallenge.model.IDeliveryContract
 import com.yychun1217.mychallenge.model.request.GetDeliveryRequest
-import com.yychun1217.pagination.datasource.ILocalPagingSource
-import com.yychun1217.pagination.datasource.IRemotePagingSource
+import com.yychun1217.pagination.pagingsource.ILocalPagingSource
+import com.yychun1217.pagination.pagingsource.IRemotePagingSource
 
 class DeliveryMergedPagingSource(
     config: Companion.Config,
