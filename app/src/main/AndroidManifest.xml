@@ -22,15 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.DeliveryDetailActivity"
-            android:label="@string/title_delivery_detail"
-            android:parentActivityName=".ui.DeliveryListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.yychun1217.mychallenge.ui.DeliveryListActivity" />
-        </activity>
     </application>
 
 </manifest>

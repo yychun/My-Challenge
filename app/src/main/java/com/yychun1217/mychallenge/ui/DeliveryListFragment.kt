@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.yychun1217.mychallenge.databinding.FragmentDeliveryListBinding
@@ -39,7 +40,10 @@ class DeliveryListFragment : Fragment() {
     private fun initViews() {
         binding.listDelivery.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-            val deliveryAdapter = DeliveryAdapter().apply {
+            val deliveryAdapter = DeliveryAdapter { view, delivery ->
+                view.findNavController()
+                    .navigate(DeliveryListFragmentDirections.deliveryListToDetail(delivery))
+            }.apply {
                 addLoadStateListener { loadState ->
                     Timber.d("DeliveryAdapter.loadState: $loadState")
                     if (loadState.refresh is LoadState.NotLoading) {

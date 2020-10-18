@@ -1,10 +1,12 @@
 package com.yychun1217.mychallenge.model
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.yychun1217.pagination.model.EntityType
 import com.yychun1217.pagination.model.IEntity
+import kotlinx.android.parcel.Parcelize
 
 interface Delivery {
     data class Api(
@@ -44,6 +46,7 @@ interface Delivery {
             }
     }
 
+    @Parcelize
     data class Ui(
         val deliveryFee: Float,
         val from: String,
@@ -53,7 +56,7 @@ interface Delivery {
         val goodsPicture: String,
         val surcharge: Float,
         val to: String,
-    ) : IEntity.Ui {
+    ) : IEntity.Ui, Parcelable {
         val price: Float
             get() = deliveryFee + surcharge
     }

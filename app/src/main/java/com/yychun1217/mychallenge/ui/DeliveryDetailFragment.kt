@@ -2,59 +2,40 @@ package com.yychun1217.mychallenge.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.yychun1217.mychallenge.R
 import com.yychun1217.mychallenge.databinding.FragmentDeliveryDetailBinding
-import com.yychun1217.mychallenge.dummy.DummyContent
+import com.yychun1217.mychallenge.model.Delivery
+import com.yychun1217.mychallenge.viewmodel.DeliveryDetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-/**
- * A fragment representing a single Item detail screen.
- * This fragment is either contained in a [DeliveryListActivity]
- * in two-pane mode (on tablets) or a [DeliveryDetailActivity]
- * on handsets.
- */
+@AndroidEntryPoint
 class DeliveryDetailFragment : Fragment() {
-
-    /**
-     * The dummy content this fragment is presenting.
-     */
-    private var item: DummyContent.DummyItem? = null
-    private lateinit var binding: FragmentDeliveryDetailBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            if (it.containsKey(ARG_ITEM_ID)) {
-                // Load the dummy content specified by the fragment
-                // arguments. In a real-world scenario, use a Loader
-                // to load content from a content provider.
-                item = DummyContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
-                activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title =
-                    item?.content
-            }
-        }
+    companion object {
+        private const val KEY_DELIVERY = "delivery"
     }
+
+    private lateinit var binding: FragmentDeliveryDetailBinding
+    @Inject
+    lateinit var viewModel: DeliveryDetailViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = FragmentDeliveryDetailBinding.inflate(inflater).apply {
         binding = this
-        // Show the dummy content as text in a TextView.
-        item?.let {
-            itemDetail.text = it.details
-        }
     }.root
 
-    companion object {
-        /**
-         * The fragment argument representing the item ID that this fragment
-         * represents.
-         */
-        const val ARG_ITEM_ID = "item_id"
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.delivery.observe(viewLifecycleOwner) {
+            binding.itemDetail.text = it.toString()
+        }
+
+        arguments?.getParcelable<Delivery.Ui>(KEY_DELIVERY)?.let {
+            viewModel.setDetail(it)
+        }
     }
 }
