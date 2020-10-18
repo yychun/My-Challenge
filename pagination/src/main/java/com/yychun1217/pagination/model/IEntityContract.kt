@@ -1,21 +1,21 @@
 package com.yychun1217.pagination.model
 
-interface IEntity<TYPE : EntityType> {
+interface IEntityContract<TYPE : EntityType> {
     val type: TYPE
 
-    fun <ENTITY : IEntity<EntityType>> toEntity(type: EntityType): ENTITY? = null
+    fun <ENTITY : IEntityContract<EntityType>> toEntity(type: EntityType): ENTITY? = null
 
-    interface Api : IEntity<EntityType.API> {
+    interface Api : IEntityContract<EntityType.API> {
         override val type: EntityType.API
             get() = EntityType.API
     }
 
-    interface Ui : IEntity<EntityType.UI> {
+    interface Ui : IEntityContract<EntityType.UI> {
         override val type: EntityType.UI
             get() = EntityType.UI
     }
 
-    interface Db : IEntity<EntityType.DB> {
+    interface Db : IEntityContract<EntityType.DB> {
         override val type: EntityType.DB
             get() = EntityType.DB
     }

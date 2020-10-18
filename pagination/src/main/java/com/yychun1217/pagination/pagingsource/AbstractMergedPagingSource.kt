@@ -5,10 +5,10 @@ import com.yychun1217.pagination.datasource.ILocalPagingSource
 import com.yychun1217.pagination.datasource.IMergedPagingSource
 import com.yychun1217.pagination.datasource.IRemotePagingSource
 import com.yychun1217.pagination.model.EntityType
-import com.yychun1217.pagination.model.IEntity
+import com.yychun1217.pagination.model.IEntityContract
 import timber.log.Timber
 
-abstract class AbstractMergedPagingSource<KEY : Any, DB : IEntity.Db, API : IEntity.Api, UI : IEntity.Ui>(
+abstract class AbstractMergedPagingSource<KEY : Any, DB : IEntityContract.Db, API : IEntityContract.Api, UI : IEntityContract.Ui>(
     override val local: ILocalPagingSource<KEY, DB>,
     override val remote: IRemotePagingSource<KEY, API>
 ) : PagingSource<KEY, UI>(), IMergedPagingSource<KEY, DB, API> {

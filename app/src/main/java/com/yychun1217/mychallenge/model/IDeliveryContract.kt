@@ -5,7 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.yychun1217.pagination.model.EntityType
-import com.yychun1217.pagination.model.IEntity
+import com.yychun1217.pagination.model.IEntityContract
 import kotlinx.android.parcel.Parcelize
 
 interface IDeliveryContract {
@@ -18,9 +18,9 @@ interface IDeliveryContract {
         val route: DeliveryRoute.Api,
         val sender: DeliverySender.Api,
         val surcharge: String,
-    ) : IEntity.Api {
+    ) : IEntityContract.Api {
         @Suppress("UNCHECKED_CAST")
-        override fun <ENTITY : IEntity<EntityType>> toEntity(type: EntityType): ENTITY? =
+        override fun <ENTITY : IEntityContract<EntityType>> toEntity(type: EntityType): ENTITY? =
             when (type) {
                 EntityType.UI -> Ui(
                     deliveryFee = deliveryFee.substring(1).toFloat(),
@@ -56,7 +56,7 @@ interface IDeliveryContract {
         val goodsPicture: String,
         val surcharge: Float,
         val to: String,
-    ) : IEntity.Ui, Parcelable {
+    ) : IEntityContract.Ui, Parcelable {
         val price: Float
             get() = deliveryFee + surcharge
     }
@@ -71,13 +71,13 @@ interface IDeliveryContract {
         @ColumnInfo(name = "goods_picture") val goodsPicture: String,
         @ColumnInfo(name = "surcharge") val surcharge: Float,
         @ColumnInfo(name = "route_to") val to: String,
-    ) : IEntity.Db {
+    ) : IEntityContract.Db {
         companion object {
             const val NAME_DB_TABLE = "Delivery"
         }
 
         @Suppress("UNCHECKED_CAST")
-        override fun <ENTITY : IEntity<EntityType>> toEntity(type: EntityType): ENTITY? =
+        override fun <ENTITY : IEntityContract<EntityType>> toEntity(type: EntityType): ENTITY? =
             when (type) {
                 EntityType.UI -> Ui(
                     deliveryFee = deliveryFee,

@@ -1,5 +1,5 @@
 package com.yychun1217.pagination.datasource
 
-import com.yychun1217.pagination.model.IEntity
+import com.yychun1217.pagination.model.IEntityContract
 
-interface IRemotePagingSource<KEY, API: IEntity.Api> : IPagingSource<KEY, API>
+interface IRemotePagingSource<KEY, API: IEntityContract.Api> : IPagingSource<KEY, API>
