@@ -1,27 +1,50 @@
 package com.yychun1217.mychallenge.ui
 
 import android.content.Context
+import android.os.Bundle
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import androidx.annotation.IdRes
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.navigation.findNavController
+import com.yychun1217.mychallenge.R
 import com.yychun1217.mychallenge.databinding.LayoutTwoPaneFragmentHostBinding
+import com.yychun1217.mychallenge.ui.navigation.INavComponent
 import timber.log.Timber
 
 class TwoPaneFragmentHostLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : ConstraintLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr), INavComponent {
+    companion object {
+        fun isMasterComponent(@IdRes destinationId: Int): Boolean = when (destinationId) {
+            R.id.fragment_delivery_list -> true
+            else -> false
+        }
+
+        fun isDetailComponent(@IdRes destinationId: Int): Boolean = when (destinationId) {
+            R.id.fragment_delivery_detail -> true
+            else -> false
+        }
+    }
+
     private val binding =
         LayoutTwoPaneFragmentHostBinding.inflate(LayoutInflater.from(context), this)
+    private val isTwoPane: Boolean
+        get() = context.resources.getBoolean(R.bool.isTablet)
 
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private val twoPane: Boolean = binding.navMenuFragment != null
-
-    init {
-        Timber.d("TwoPaneFragmentHostLayout.twoPane: $twoPane")
+    override fun navigate(destinationId: Int, args: Bundle?): Boolean {
+        val navHostFragment = if (isTwoPane) when {
+            isMasterComponent(destinationId) -> binding.navMasterFragment
+            isDetailComponent(destinationId) -> binding.navDetailFragment
+            else -> null
+        } else binding.navMasterFragment
+        return navHostFragment?.findNavController()?.navigate(destinationId, args)?.let {
+            true
+        } ?: kotlin.run {
+            Timber.w("No matching navHostFragment for destinationId $destinationId !")
+            false
+        }
     }
 }

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -18,6 +19,10 @@ import javax.inject.Inject
 class DeliveryDetailFragment : Fragment() {
     companion object {
         private const val KEY_ID = "id"
+
+        fun toBundle(id: String): Bundle = bundleOf(
+            KEY_ID to id,
+        )
     }
 
     @Inject

@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.yychun1217.mychallenge.R
 import com.yychun1217.mychallenge.databinding.FragmentDeliveryListBinding
+import com.yychun1217.mychallenge.ui.navigation.navigate
 import com.yychun1217.mychallenge.viewmodel.DeliveryListViewModel
 import com.yychun1217.pagination.ui.PaginationLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,8 +42,10 @@ class DeliveryListFragment : Fragment() {
         binding.listDelivery.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             val deliveryAdapter = DeliveryAdapter { view, delivery ->
-                view.findNavController()
-                    .navigate(DeliveryListFragmentDirections.deliveryListToDetail(delivery.id))
+                navigate(
+                    R.id.fragment_delivery_detail,
+                    DeliveryDetailFragment.Companion.toBundle(delivery.id)
+                )
             }.apply {
                 addLoadStateListener { loadState ->
                     Timber.d("DeliveryAdapter.loadState: $loadState")
