@@ -13,8 +13,8 @@ interface IDeliveryContract {
         val id: String,
         val pickupTime: String,
         val remarks: String,
-        val route: DeliveryRoute.Api,
-        val sender: DeliverySender.Api,
+        val route: IDeliveryRouteContract.Api,
+        val sender: IDeliverySenderContract.Api,
         val surcharge: String,
     ) : IEntityContract.Api {
         @Suppress("UNCHECKED_CAST")
