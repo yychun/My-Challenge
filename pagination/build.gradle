@@ -53,4 +53,7 @@ dependencies {
     // paging
     api 'androidx.paging:paging-runtime:3.0.0-alpha07'
     testApi 'androidx.paging:paging-common:3.0.0-alpha07'
+
+    // logging
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 }
