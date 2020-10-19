@@ -1,7 +1,7 @@
 package com.yychun1217.mychallenge.di
 
 import com.yychun1217.mychallenge.datasource.local.*
-import com.yychun1217.mychallenge.db.DeliveryDao
+import com.yychun1217.mychallenge.db.MiscDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,8 +14,8 @@ class DataSourceModule {
     @Provides
     @Inject
     fun provideIDeliveryLocalDataSource(
-        deliveryDao: DeliveryDao
-    ): IDeliveryLocalDataSource = DeliveryLocalDataSource(deliveryDao)
+        miscDao: MiscDao
+    ): IDeliveryLocalDataSource = DeliveryLocalDataSource(miscDao)
 
     @Provides
     @Inject

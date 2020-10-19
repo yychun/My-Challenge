@@ -4,7 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.yychun1217.mychallenge.db.MyDatabase
 import com.yychun1217.mychallenge.db.DeliveryDao
-import com.yychun1217.mychallenge.db.DeliveryRouteDao
+import com.yychun1217.mychallenge.db.MiscDao
+import com.yychun1217.mychallenge.db.RouteDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,7 +36,14 @@ class RoomModule {
     @Provides
     @Singleton
     @Inject
-    fun provideDeliveryRouteDao(
+    fun provideRouteDao(
         myDatabase: MyDatabase
-    ): DeliveryRouteDao = myDatabase.deliveryRouteDao()
+    ): RouteDao = myDatabase.routeDao()
+
+    @Provides
+    @Singleton
+    @Inject
+    fun provideMiscDao(
+        myDatabase: MyDatabase
+    ): MiscDao = myDatabase.miscDao()
 }

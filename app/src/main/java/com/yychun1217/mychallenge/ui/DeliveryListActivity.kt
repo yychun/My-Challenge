@@ -3,7 +3,6 @@ package com.yychun1217.mychallenge.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
 import com.yychun1217.mychallenge.R
 import com.yychun1217.mychallenge.databinding.ActivityDeliveryListBinding
 import dagger.hilt.android.AndroidEntryPoint

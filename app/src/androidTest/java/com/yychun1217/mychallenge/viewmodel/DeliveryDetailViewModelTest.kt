@@ -8,17 +8,14 @@ import com.yychun1217.mychallenge.dummy.Dummy
 import com.yychun1217.mychallenge.model.IDeliveryContract
 import com.yychun1217.mychallenge.util.anyObject
 import com.yychun1217.mychallenge.util.observeOnce
-import com.yychun1217.pagination.model.EntityType
 import kotlinx.coroutines.*
 
 import org.junit.Test
 
 import org.junit.Before
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito
-import kotlin.coroutines.CoroutineContext
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
@@ -36,7 +33,7 @@ class DeliveryDetailViewModelTest : BaseTestCase() {
     @Test
     fun getDeliveryByID() {
         CoroutineScope(Dispatchers.Main).launch {
-            Mockito.`when`(iDeliveryLocalRepository.getDelivery(Dummy.DELIVER_ID))
+            Mockito.`when`(iDeliveryLocalRepository.getDeliveryAndRoute(Dummy.DELIVER_ID))
                 .thenReturn(Dummy.DELIVERY_DB)
             deliveryDetailViewModel.getDeliveryByID(Dummy.DELIVER_ID)
             deliveryDetailViewModel.delivery.observeOnce {
@@ -48,7 +45,7 @@ class DeliveryDetailViewModelTest : BaseTestCase() {
     @Test
     fun toggleFavourite() {
         CoroutineScope(Dispatchers.Main).launch {
-            Mockito.`when`(iDeliveryLocalRepository.getDelivery(Dummy.DELIVER_ID))
+            Mockito.`when`(iDeliveryLocalRepository.getDeliveryAndRoute(Dummy.DELIVER_ID))
                 .thenReturn(Dummy.DELIVERY_DB)
             deliveryDetailViewModel.getDeliveryByID(Dummy.DELIVER_ID)
             deliveryDetailViewModel.delivery.observeOnce {

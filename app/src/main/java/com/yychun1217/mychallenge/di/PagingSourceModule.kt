@@ -1,11 +1,11 @@
 package com.yychun1217.mychallenge.di
 
 import com.yychun1217.mychallenge.DeliveryService
-import com.yychun1217.mychallenge.db.DeliveryDao
+import com.yychun1217.mychallenge.db.MiscDao
+import com.yychun1217.mychallenge.model.IDeliveryAndRouteContract
 import com.yychun1217.mychallenge.pagingsource.AbstractDeliveryMergedPagingSource
 import com.yychun1217.mychallenge.pagingsource.DeliveryMergedPagingSource
 import com.yychun1217.mychallenge.pagingsource.remote.DeliveryRemotePagingSource
-import com.yychun1217.mychallenge.model.IDeliveryContract
 import com.yychun1217.mychallenge.model.request.GetDeliveryRequest
 import com.yychun1217.mychallenge.pagingsource.local.DeliveryLocalPagingSource
 import com.yychun1217.pagination.pagingsource.ILocalPagingSource
@@ -22,22 +22,22 @@ class PagingSourceModule {
     @Provides
     @Inject
     fun provideILocalPagingSource(
-        deliveryDao: DeliveryDao
-    ): ILocalPagingSource<GetDeliveryRequest, IDeliveryContract.Db> =
-        DeliveryLocalPagingSource(deliveryDao)
+        miscDao: MiscDao
+    ): ILocalPagingSource<GetDeliveryRequest, IDeliveryAndRouteContract.Db> =
+        DeliveryLocalPagingSource(miscDao)
 
     @Provides
     @Inject
     fun provideIRemotePagingSource(
         service: DeliveryService
-    ): IRemotePagingSource<GetDeliveryRequest, IDeliveryContract.Api> =
+    ): IRemotePagingSource<GetDeliveryRequest, IDeliveryAndRouteContract.Api> =
         DeliveryRemotePagingSource(service)
 
     @Provides
     @Inject
     fun provideDeliveryMergedPagingSource(
-        local: ILocalPagingSource<GetDeliveryRequest, IDeliveryContract.Db>,
-        remote: IRemotePagingSource<GetDeliveryRequest, IDeliveryContract.Api>
+        local: ILocalPagingSource<GetDeliveryRequest, IDeliveryAndRouteContract.Db>,
+        remote: IRemotePagingSource<GetDeliveryRequest, IDeliveryAndRouteContract.Api>
     ): AbstractDeliveryMergedPagingSource = DeliveryMergedPagingSource(
         AbstractDeliveryMergedPagingSource.Companion.Config(0, 20),
         local,

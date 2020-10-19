@@ -1,0 +1,115 @@
+*.stackexchange.com
+
+Subject Name
+    Common Name	*.stackexchange.com
+
+Issuer Name
+    Country or Region	US
+    Organisation	Let's Encrypt
+    Common Name	Let's Encrypt Authority X3
+
+Serial Number	03 F7 3C D1 63 AB 05 2D 41 D1 82 94 D5 69 DB 38 8C 2E
+Version	3
+Signature Algorithm	SHA-256 with RSA Encryption ( 1.2.840.113549.1.1.11 )
+    Parameters	None
+
+Not Valid Before	Monday, 5 October 2020 at 9:02:44 PM Hong Kong Standard Time
+Not Valid After	Sunday, 3 January 2021 at 9:02:44 PM Hong Kong Standard Time
+
+Public Key Info
+    Algorithm	RSA Encryption ( 1.2.840.113549.1.1.1 )
+    Parameters	None
+    Public Key	256 bytes: E0 BC 47 F8 EF CF 07 54
+1F 35 C0 80 27 15 B6 39 E7 A4 1B EC 13 81 E4 88 63 A3 32 F0 2D 2F 4E B0 E0 27 D8 39 AB F8 FF F8 E7 A9 F2 B0 25 D0 00 5C 3F 63 DF 11 F8 83 5F 8D 34 9C 49 C6 5A F9 67 CA 33 DB 64 4D 22 EB AC 7B 8F C8 54 34 20 4C 29 CB 9F 7E 71 D9 CF A0 94 16 AC 0B BA 63 44 46 46 FD BB C8 E3 95 47 27 80 AA 07 B6 A4 0A C3 89 8A AB 73 4B 04 1D 2A C1 49 2D 70 B2 AF E7 9F 37 1A 49 9A E8 2F DB 81 A8 68 BC 86 17 B9 18 95 18 93 61 79 12 27 B1 B1 8C 6F F6 3C 7C B8 B4 3B BE 90 66 93 71 2D 25 B3 A5 3F 4D 2E 9D 06 47 E5 67 7A B3 04 E7 B4 E8 45 50 74 84 DA 0D C1 8F 75 A2 FC C8 E1 AB AB 29 4D 09 AF 8D AC CD EB E6 53 EA 5F 94 10 54 88 F0 F7 65 4B D7 07 F7 D0 E5 3F 25 71 89 97 DE CE 86 E4 F4 21 80 7E 48 56 84 54 68 79 C5 CA 21 E3 06 63 8F 63 52 68 9C B9 92 5F 6B 90 3B
+    Exponent	65537
+    Key Size	2,048 bits
+    Key Usage	Encrypt, Verify, Wrap, Derive
+
+Signature	256 bytes: 39 05 06 19 70 30 6E 87
+53 67 51 8B 29 31 31 5C B8 38 D8 4A 66 43 94 3F 4C 05 34 9A 03 86 A5 B0 73 76 97 E8 EC CF F7 0B 80 F3 59 59 D3 A1 9F 53 4F 6F A3 94 DF 1E 09 00 EC FF E3 06 90 BE A4 34 55 88 63 06 99 4B 32 21 F7 1C F5 C7 22 26 87 27 0F A9 F8 77 73 D2 08 B7 80 C7 2F BA 8C FB 89 FB BE F4 67 A6 99 D1 95 C1 DA 5E 1A E6 4F E0 D4 17 24 29 EE 36 1C 23 AE A1 50 1E EA 22 98 AB E6 D8 CE 79 E5 F2 41 FA 28 FE A7 72 B6 2A 16 D0 9E AD 81 2A 79 F6 12 A2 11 39 7F 44 BA 1B F5 4D 5A 54 CF EA D2 48 92 7C F6 D2 14 02 AC E9 1D 24 BA 08 9B 77 67 72 E3 82 DC B2 D6 ED 09 D7 E5 0D 94 9E BD 24 D1 19 22 1B 06 7D C7 DC EA B5 7A FF 01 77 B9 14 41 74 97 24 F6 AC 8C 09 E8 E0 EC D1 12 CB 14 C6 9E 3F 90 72 06 F3 12 93 1B 19 DC D9 D0 F0 B2 BD A2 56 71 C9 7B AB 2B 11 CC 68 89 17 55 88
+
+Extension	Key Usage ( 2.5.29.15 )
+    Critical	YES
+    Usage	Digital Signature, Key Encipherment
+
+Extension	Basic Constraints ( 2.5.29.19 )
+    Critical	YES
+    Certificate Authority	NO
+
+Extension	Extended Key Usage ( 2.5.29.37 )
+    Critical	NO
+    Purpose #1	Server Authentication ( 1.3.6.1.5.5.7.3.1 )
+    Purpose #2	Client Authentication ( 1.3.6.1.5.5.7.3.2 )
+
+Extension	Subject Key Identifier ( 2.5.29.14 )
+    Critical	NO
+    Key ID	AF BB 91 F3 56 D5 75 56 29 A8 89 9C F2 FE 2C 0F 9D 43 AA AA
+
+Extension	Authority Key Identifier ( 2.5.29.35 )
+    Critical	NO
+    Key ID	A8 4A 6A 63 04 7D DD BA E6 D1 39 B7 A6 45 65 EF F3 A8 EC A1
+
+Extension	Subject Alternative Name ( 2.5.29.17 )
+    Critical	NO
+    DNS Name	*.askubuntu.com
+    DNS Name	*.blogoverflow.com
+    DNS Name	*.mathoverflow.net
+    DNS Name	*.meta.stackexchange.com
+    DNS Name	*.meta.stackoverflow.com
+    DNS Name	*.serverfault.com
+    DNS Name	*.sstatic.net
+    DNS Name	*.stackexchange.com
+    DNS Name	*.stackoverflow.com
+    DNS Name	*.stackoverflow.email
+    DNS Name	*.superuser.com
+    DNS Name	askubuntu.com
+    DNS Name	blogoverflow.com
+    DNS Name	mathoverflow.net
+    DNS Name	openid.stackauth.com
+    DNS Name	serverfault.com
+    DNS Name	sstatic.net
+    DNS Name	stackapps.com
+    DNS Name	stackauth.com
+    DNS Name	stackexchange.com
+    DNS Name	stackoverflow.blog
+    DNS Name	stackoverflow.com
+    DNS Name	stackoverflow.email
+    DNS Name	stacksnippets.net
+    DNS Name	superuser.com
+
+Extension	Certificate Policies ( 2.5.29.32 )
+    Critical	NO
+    Policy ID #1	( 2.23.140.1.2.1 )
+    Policy ID #2	( 1.3.6.1.4.1.44947.1.1.1 )
+    Qualifier ID #1	Certification Practice Statement ( 1.3.6.1.5.5.7.2.1 )
+        CPS URI	http://cps.letsencrypt.org
+
+Extension	Embedded Signed Certificate Timestamp List ( 1.3.6.1.4.1.11129.2.4.2 )
+    Critical	NO
+    SCT Version	1
+    Log Operator	Let's Encrypt
+    Log Key ID	94 20 BC 1E 8E D5 8D 6C 88 73 1F 82 8B 22 2C 0D D1 DA 4D 5E 6C 4F 94 3D 61 DB 4E 2F 58 4D A2 C2
+    Timestamp	Monday, 5 October 2020 at 10:02:44 PM Hong Kong Standard Time
+    Signature Algorithm	SHA-256 ECDSA
+    Signature	70 bytes: 30 44 02 20 55 AC BB D0
+2B BD 77 8E 8D 10 E9 94 B7 75 D4 BB B6 D7 22 A9 12 87 E0 D0 5F 0D 11 77 2E 6A 21 0D 02 20 7E 06 98 DA 2E 5D E0 A8 BD 19 71 FD 3E 01 F4 78 7F FF E5 6F 03 5B 41 6A 48 22 AB EE 96 10 F4 7C
+    SCT Version	1
+    Log Operator	Google
+    Log Key ID	7D 3E F2 F8 8F FF 88 55 68 24 C2 C0 CA 9E 52 89 79 2B C5 0E 78 09 7F 2E 6A 97 68 99 7E 22 F0 D7
+    Timestamp	Monday, 5 October 2020 at 10:02:44 PM Hong Kong Standard Time
+    Signature Algorithm	SHA-256 ECDSA
+    Signature	71 bytes: 30 45 02 21 00 B3 88 99
+CA F8 35 CC 2D B3 68 50 AC F4 23 6E 88 68 64 B8 3D DC 76 67 2E 3C 2C 75 AA 2E EB 66 A7 02 20 04 08 6B 17 32 77 9C 24 55 63 63 D4 27 97 AD 4A E2 4E 1A CC C8 E1 25 90 D5 DA 37 7E 23 DD 6A 94
+
+Extension	Certificate Authority Information Access ( 1.3.6.1.5.5.7.1.1 )
+    Critical	NO
+    Method #1	Online Certificate Status Protocol ( 1.3.6.1.5.5.7.48.1 )
+        URI	http://ocsp.int-x3.letsencrypt.org
+    Method #2	CA Issuers ( 1.3.6.1.5.5.7.48.2 )
+        URI	http://cert.int-x3.letsencrypt.org/
+
+Fingerprints
+    SHA-256	E5 81 5A DF 11 A9 0C CC 51 8F 6A 99 D2 6C 67 16 29 D6 68 E1 EA C2 C0 A7 E7 9B 84 09 AF 9C 29 14
+    SHA-1	D9 86 03 80 A1 BB 44 5B 27 5B FB 51 8E 4D A0 AF E5 AB B4 3C
+
+

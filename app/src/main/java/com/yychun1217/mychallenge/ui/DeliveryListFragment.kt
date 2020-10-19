@@ -76,7 +76,7 @@ class DeliveryListFragment : Fragment() {
             val deliveryAdapter = DeliveryAdapter { view, delivery ->
                 navigate(
                     R.id.fragment_delivery_detail,
-                    DeliveryDetailFragment.Companion.toBundle(delivery.id)
+                    DeliveryDetailFragment.Companion.toBundle(delivery.route._idDB.toString())
                 )
             }.apply {
                 addLoadStateListener { loadState ->

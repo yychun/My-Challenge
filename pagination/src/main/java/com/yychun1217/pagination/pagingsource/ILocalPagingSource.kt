@@ -2,7 +2,7 @@ package com.yychun1217.pagination.pagingsource
 
 import com.yychun1217.pagination.model.IEntityContract
 
-interface ILocalPagingSource<KEY, DB: IEntityContract.Db> : IPagingSource<KEY, DB> {
+interface ILocalPagingSource<KEY, DB : IEntityContract.Db<*, *>> : IPagingSource<KEY, DB> {
     /*
     return a list of data successfully inserted into DB
      */

@@ -25,15 +25,15 @@ class DeliveryLocalRepositoryTest : BaseTestCase() {
 
     @Test
     fun testGetDeliveryByIDReturnDelivery() = runBlocking {
-        Mockito.`when`(iDeliveryLocalDataSource.getDelivery(Dummy.DELIVER_ID)).thenReturn(Dummy.DELIVERY_DB)
-        val delivery = deliverLocalRepository.getDelivery(Dummy.DELIVER_ID)
+        Mockito.`when`(iDeliveryLocalDataSource.getDeliveryAndRoute(Dummy.DELIVER_ID)).thenReturn(Dummy.DELIVERY_DB)
+        val delivery = deliverLocalRepository.getDeliveryAndRoute(Dummy.DELIVER_ID)
         assert(delivery?.id == Dummy.DELIVER_ID)
     }
 
     @Test
     fun testGetDeliveryByWrongIDReturnNull() = runBlocking {
-        Mockito.`when`(iDeliveryLocalDataSource.getDelivery(Dummy.DELIVER_ID)).thenReturn(Dummy.DELIVERY_DB)
-        val delivery = deliverLocalRepository.getDelivery(Dummy.DELIVER_WRONG_ID)
+        Mockito.`when`(iDeliveryLocalDataSource.getDeliveryAndRoute(Dummy.DELIVER_ID)).thenReturn(Dummy.DELIVERY_DB)
+        val delivery = deliverLocalRepository.getDeliveryAndRoute(Dummy.DELIVER_WRONG_ID)
         assert(delivery == null)
     }
 

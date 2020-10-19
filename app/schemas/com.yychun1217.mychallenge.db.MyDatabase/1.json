@@ -2,102 +2,96 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "30431bd05b2f7ff7d24d45a59cb524d6",
+    "identityHash": "931170e9959a9a7b2f3a062e68820c80",
     "entities": [
       {
-        "tableName": "Delivery",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `delivery_fee` REAL NOT NULL, `is_favourite` INTEGER NOT NULL, `remarks` TEXT NOT NULL, `goods_picture` TEXT NOT NULL, `surcharge` REAL NOT NULL, `from` TEXT NOT NULL, `to` TEXT NOT NULL, `idd` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "tableName": "delivery",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`delivery_fee` REAL NOT NULL, `delivery_goods_picture` TEXT NOT NULL, `delivery_is_favourite` INTEGER NOT NULL, `delivery_remarks` TEXT NOT NULL, `delivery_remote_id` TEXT NOT NULL, `delivery_surcharge` REAL NOT NULL, `delivery_route` INTEGER NOT NULL, `delivery_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "deliveryFee",
+            "fieldPath": "fee",
             "columnName": "delivery_fee",
             "affinity": "REAL",
             "notNull": true
           },
           {
+            "fieldPath": "goodsPicture",
+            "columnName": "delivery_goods_picture",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "isFavourite",
-            "columnName": "is_favourite",
+            "columnName": "delivery_is_favourite",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
             "fieldPath": "remarks",
-            "columnName": "remarks",
+            "columnName": "delivery_remarks",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "goodsPicture",
-            "columnName": "goods_picture",
+            "fieldPath": "remoteId",
+            "columnName": "delivery_remote_id",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "surcharge",
-            "columnName": "surcharge",
+            "columnName": "delivery_surcharge",
             "affinity": "REAL",
             "notNull": true
           },
           {
-            "fieldPath": "route.from",
-            "columnName": "from",
-            "affinity": "TEXT",
+            "fieldPath": "routeId",
+            "columnName": "delivery_route",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "route.to",
-            "columnName": "to",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "route.id",
-            "columnName": "idd",
+            "fieldPath": "id",
+            "columnName": "delivery_id",
             "affinity": "INTEGER",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "delivery_id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
       },
       {
-        "tableName": "Route",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`from` TEXT NOT NULL, `to` TEXT NOT NULL, `idd` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "tableName": "route",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`route_from` TEXT NOT NULL, `route_to` TEXT NOT NULL, `route_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "from",
-            "columnName": "from",
+            "columnName": "route_from",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "to",
-            "columnName": "to",
+            "columnName": "route_to",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "id",
-            "columnName": "idd",
+            "columnName": "route_id",
             "affinity": "INTEGER",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "idd"
+            "route_id"
           ],
           "autoGenerate": true
         },
@@ -108,7 +102,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '30431bd05b2f7ff7d24d45a59cb524d6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '931170e9959a9a7b2f3a062e68820c80')"
     ]
   }
 }

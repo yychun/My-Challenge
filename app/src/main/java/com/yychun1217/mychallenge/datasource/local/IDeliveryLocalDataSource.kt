@@ -1,8 +1,8 @@
 package com.yychun1217.mychallenge.datasource.local
 
-import com.yychun1217.mychallenge.model.IDeliveryContract
+import com.yychun1217.mychallenge.model.IDeliveryAndRouteContract
 
-interface IDeliveryLocalDataSource : ILocalDataSource<IDeliveryContract.Db> {
-    suspend fun getDelivery(id: String): IDeliveryContract.Db?
-    suspend fun update(delivery: IDeliveryContract.Db): Boolean
+interface IDeliveryLocalDataSource : ILocalDataSource<IDeliveryAndRouteContract.Db> {
+    suspend fun getDeliveryAndRoute(id: String): IDeliveryAndRouteContract.Db?
+    suspend fun update(delivery: IDeliveryAndRouteContract.Db): Boolean
 }

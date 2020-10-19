@@ -1,15 +1,15 @@
 package com.yychun1217.mychallenge.dummy
 
-import com.yychun1217.mychallenge.model.IDeliveryContract
+import com.yychun1217.mychallenge.model.IDeliveryAndRouteContract
 
 object Dummy {
     const val GOOD_PICTURES = "https://loremflickr.com/320/240/cat?lock=84911"
     const val DELIVER_ID = "123"
     const val DELIVER_WRONG_ID = "124"
 
-    val DELIVERY_DB = IDeliveryContract.Db(
+    val DELIVERY_DB = IDeliveryAndRouteContract.Db(
         id = DELIVER_ID,
-        deliveryFee = 100f,
+        fee = 100f,
         from = "from",
         isFavourite = false,
         remarks = "remarks",

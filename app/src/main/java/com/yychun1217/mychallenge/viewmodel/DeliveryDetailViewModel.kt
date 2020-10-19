@@ -7,24 +7,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yychun1217.mychallenge.datasource.local.IDeliveryLocalRepository
-import com.yychun1217.mychallenge.model.IDeliveryContract
-import com.yychun1217.pagination.model.EntityType
+import com.yychun1217.mychallenge.model.IDeliveryAndRouteContract
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class DeliveryDetailViewModel @ViewModelInject constructor(
     private val iDeliveryLocalRepository: IDeliveryLocalRepository
 ) : ViewModel() {
-    private val _delivery: MutableLiveData<IDeliveryContract.Ui> = MutableLiveData()
-    val delivery: LiveData<IDeliveryContract.Ui>
+    private val _delivery: MutableLiveData<IDeliveryAndRouteContract.Ui> = MutableLiveData()
+    val delivery: LiveData<IDeliveryAndRouteContract.Ui>
         get() = _delivery
 
     fun getDeliveryByID(id: String) {
         viewModelScope.launch {
-            iDeliveryLocalRepository.getDelivery(id)?.let {
-                (it.toEntity(EntityType.UI) as? IDeliveryContract.Ui)?.let {
-                    postDelivery(it)
-                }
+            iDeliveryLocalRepository.getDeliveryAndRoute(id)?.toUi()?.let {
+                postDelivery(it)
             }
         }
     }
@@ -35,7 +32,7 @@ class DeliveryDetailViewModel @ViewModelInject constructor(
             postDelivery(update)
 
             viewModelScope.launch {
-                (update.toEntity(EntityType.DB) as? IDeliveryContract.Db)?.let { delivery ->
+                update.toDb()?.let { delivery ->
                     try {
                         if (!iDeliveryLocalRepository.update(delivery)) postDelivery(old)
                     } catch (e: SQLiteConstraintException) {
@@ -47,7 +44,7 @@ class DeliveryDetailViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun postDelivery(delivery: IDeliveryContract.Ui) {
+    private fun postDelivery(delivery: IDeliveryAndRouteContract.Ui) {
         _delivery.postValue(delivery)
     }
 }

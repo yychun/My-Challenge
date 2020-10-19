@@ -1,27 +1,27 @@
 package com.yychun1217.mychallenge.pagingsource.local
 
 import android.database.sqlite.SQLiteConstraintException
-import com.yychun1217.mychallenge.db.DeliveryDao
-import com.yychun1217.mychallenge.model.IDeliveryContract
+import com.yychun1217.mychallenge.db.MiscDao
+import com.yychun1217.mychallenge.model.IDeliveryAndRouteContract
 import com.yychun1217.mychallenge.model.request.GetDeliveryRequest
 import com.yychun1217.pagination.pagingsource.ILocalPagingSource
 import timber.log.Timber
 
 class DeliveryLocalPagingSource(
-    private val deliveryDao: DeliveryDao
-) : ILocalPagingSource<GetDeliveryRequest, IDeliveryContract.Db> {
+    private val miscDao: MiscDao
+) : ILocalPagingSource<GetDeliveryRequest, IDeliveryAndRouteContract.Db> {
     override suspend fun insert(
         key: GetDeliveryRequest,
-        page: List<IDeliveryContract.Db>
-    ): List<IDeliveryContract.Db> {
+        page: List<IDeliveryAndRouteContract.Db>
+    ): List<IDeliveryAndRouteContract.Db> {
         return try {
-            deliveryDao.insertAll(*page.toTypedArray())
+            miscDao.insert(*page.toTypedArray())
             page
         } catch (e: SQLiteConstraintException) {
             Timber.e(e)
             page.filter {
                 try {
-                    deliveryDao.insert(it)
+                    miscDao.insert(it)
                     true
                 } catch (e: SQLiteConstraintException) {
                     Timber.e(e)
@@ -31,6 +31,5 @@ class DeliveryLocalPagingSource(
         }
     }
 
-    override suspend fun loadPage(key: GetDeliveryRequest): List<IDeliveryContract.Db> =
-        deliveryDao.getAll(key.offset, key.limit)
+    override suspend fun loadPage(key: GetDeliveryRequest): List<IDeliveryAndRouteContract.Db> = miscDao.getAll(key.offset, key.limit)
 }

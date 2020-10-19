@@ -4,11 +4,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.yychun1217.mychallenge.model.IDeliveryContract
+import com.yychun1217.mychallenge.model.IDeliveryAndRouteContract
 
 class DeliveryAdapter(
-    private val onClick: (view: View, delivery: IDeliveryContract.Ui) -> Unit
-) : PagingDataAdapter<IDeliveryContract.Ui, DeliveryItemViewHolder>(ITEM_COMPARATOR) {
+    private val onClick: (view: View, delivery: IDeliveryAndRouteContract.Ui) -> Unit
+) : PagingDataAdapter<IDeliveryAndRouteContract.Ui, DeliveryItemViewHolder>(ITEM_COMPARATOR) {
 
     override fun onBindViewHolder(holder: DeliveryItemViewHolder, position: Int) {
         getItem(position)?.let {
@@ -21,16 +21,16 @@ class DeliveryAdapter(
     }
 
     companion object {
-        val ITEM_COMPARATOR = object : DiffUtil.ItemCallback<IDeliveryContract.Ui>() {
+        val ITEM_COMPARATOR = object : DiffUtil.ItemCallback<IDeliveryAndRouteContract.Ui>() {
             override fun areContentsTheSame(
-                oldItem: IDeliveryContract.Ui,
-                newItem: IDeliveryContract.Ui
+                oldItem: IDeliveryAndRouteContract.Ui,
+                newItem: IDeliveryAndRouteContract.Ui
             ): Boolean = oldItem == newItem
 
             override fun areItemsTheSame(
-                oldItem: IDeliveryContract.Ui,
-                newItem: IDeliveryContract.Ui
-            ): Boolean = oldItem.id == newItem.id
+                oldItem: IDeliveryAndRouteContract.Ui,
+                newItem: IDeliveryAndRouteContract.Ui
+            ): Boolean = oldItem.remoteId == newItem.remoteId
         }
     }
 }

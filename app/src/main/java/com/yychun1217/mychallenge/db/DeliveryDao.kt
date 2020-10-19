@@ -18,11 +18,8 @@ interface DeliveryDao {
     suspend fun get(id: String): IDeliveryContract.Db?
 
     @Insert
-    suspend fun insert(delivery: IDeliveryContract.Db)
-
-    @Insert
-    suspend fun insertAll(vararg deliveries: IDeliveryContract.Db)
+    suspend fun insert(vararg delivery: IDeliveryContract.Db)
 
     @Update
-    suspend fun update(delivery: IDeliveryContract.Db)
+    suspend fun update(vararg delivery: IDeliveryContract.Db)
 }

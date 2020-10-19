@@ -10,29 +10,29 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.yychun1217.mychallenge.R
 import com.yychun1217.mychallenge.databinding.ViewDeliveryListItemBinding
-import com.yychun1217.mychallenge.model.IDeliveryContract
+import com.yychun1217.mychallenge.model.IDeliveryAndRouteContract
 
 class DeliveryItemViewHolder(
     private val binding: ViewDeliveryListItemBinding,
-    onClick: (view: View, delivery: IDeliveryContract.Ui) -> Unit
+    onClick: (view: View, delivery: IDeliveryAndRouteContract.Ui) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
     init {
         itemView.setOnClickListener {
-            (it.tag as? IDeliveryContract.Ui)?.let { delivery ->
+            (it.tag as? IDeliveryAndRouteContract.Ui)?.let { delivery ->
                 onClick.invoke(it, delivery)
             }
         }
     }
 
-    fun bind(position: Int, data: IDeliveryContract.Ui) {
+    fun bind(position: Int, data: IDeliveryAndRouteContract.Ui) {
         with(itemView.context) {
             Glide.with(this).load(data.goodsPicture)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .fitCenter()
                 .placeholder(ColorDrawable(Color.LTGRAY))
                 .into(binding.imageGoods)
-            binding.textFrom.text = getString(R.string.delivery_list_from, data.from)
-            binding.textTo.text = getString(R.string.delivery_list_to, data.to)
+            binding.textFrom.text = getString(R.string.delivery_list_from, data.route.from)
+            binding.textTo.text = getString(R.string.delivery_list_to, data.route.to)
             binding.textPrice.text = getString(R.string.delivery_list_price, data.price)
             val favouriteRes =
                 if (data.isFavourite) android.R.drawable.star_on else android.R.drawable.star_off
@@ -42,7 +42,7 @@ class DeliveryItemViewHolder(
     }
 
     companion object {
-        fun create(parent: ViewGroup, onClick: (view: View, delivery: IDeliveryContract.Ui) -> Unit): DeliveryItemViewHolder {
+        fun create(parent: ViewGroup, onClick: (view: View, delivery: IDeliveryAndRouteContract.Ui) -> Unit): DeliveryItemViewHolder {
             return DeliveryItemViewHolder(
                 ViewDeliveryListItemBinding.inflate(
                     LayoutInflater.from(

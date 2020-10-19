@@ -30,14 +30,14 @@ class DeliveryLocalDataSourceTest : BaseTestCase() {
     @Test
     fun testGetDeliveryByIDReturnDelivery() = runBlocking {
         Mockito.`when`(deliveryDao.get(Dummy.DELIVER_ID)).thenReturn(Dummy.DELIVERY_DB)
-        val delivery = deliverLocalDataSource.getDelivery(Dummy.DELIVER_ID)
+        val delivery = deliverLocalDataSource.getDeliveryAndRoute(Dummy.DELIVER_ID)
         assert(delivery?.id == Dummy.DELIVER_ID)
     }
 
     @Test
     fun testGetDeliveryByWrongIDReturnNull() = runBlocking {
         Mockito.`when`(deliveryDao.get(Dummy.DELIVER_ID)).thenReturn(Dummy.DELIVERY_DB)
-        val delivery = deliverLocalDataSource.getDelivery(Dummy.DELIVER_WRONG_ID)
+        val delivery = deliverLocalDataSource.getDeliveryAndRoute(Dummy.DELIVER_WRONG_ID)
         assert(delivery == null)
     }
 
