@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_detail"
-    app:startDestination="@id/fragment_delivery_detail">
+    app:startDestination="@id/fragment_delivery_detail"
+    tools:ignore="MissingDefaultResource">
 
     <fragment
         android:id="@+id/fragment_delivery_detail"

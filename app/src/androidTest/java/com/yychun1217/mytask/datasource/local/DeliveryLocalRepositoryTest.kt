@@ -25,31 +25,15 @@ class DeliveryLocalRepositoryTest : BaseTestCase() {
 
     @Test
     fun testGetDeliveryByIDReturnDelivery() = runBlocking {
-        Mockito.`when`(iDeliveryAndRouteLocalDataSource.getDeliveryAndRoute(Dummy.DELIVER_ID)).thenReturn(Dummy.DELIVERY_DB)
-        val delivery = deliverLocalRepository.getDeliveryAndRoute(Dummy.DELIVER_ID)
-        assert(delivery?.id == Dummy.DELIVER_ID)
+        Mockito.`when`(iDeliveryAndRouteLocalDataSource.getDeliveryAndRoute(Dummy.ROUTE_ID)).thenReturn(Dummy.DELIVERY_DB)
+        val delivery = deliverLocalRepository.getDeliveryAndRoute(Dummy.ROUTE_ID)
+        assert(delivery?.delivery?.id == Dummy.ROUTE_ID)
     }
 
     @Test
     fun testGetDeliveryByWrongIDReturnNull() = runBlocking {
-        Mockito.`when`(iDeliveryAndRouteLocalDataSource.getDeliveryAndRoute(Dummy.DELIVER_ID)).thenReturn(Dummy.DELIVERY_DB)
-        val delivery = deliverLocalRepository.getDeliveryAndRoute(Dummy.DELIVER_WRONG_ID)
+        Mockito.`when`(iDeliveryAndRouteLocalDataSource.getDeliveryAndRoute(Dummy.ROUTE_ID)).thenReturn(Dummy.DELIVERY_DB)
+        val delivery = deliverLocalRepository.getDeliveryAndRoute(Dummy.WRONG_ROUTE_ID)
         assert(delivery == null)
-    }
-
-    @Test
-    fun testUpdateSuccessful() = runBlocking {
-        val returnIsSuccess = true
-        Mockito.`when`(iDeliveryAndRouteLocalDataSource.update(Dummy.DELIVERY_DB_UPDATED)).thenReturn(returnIsSuccess)
-        val isSuccess = deliverLocalRepository.update(Dummy.DELIVERY_DB_UPDATED)
-        assert(isSuccess == returnIsSuccess)
-    }
-
-    @Test
-    fun testUpdateUnsuccessful() = runBlocking {
-        val returnIsSuccess = false
-        Mockito.`when`(iDeliveryAndRouteLocalDataSource.update(Dummy.DELIVERY_DB_UPDATED)).thenReturn(returnIsSuccess)
-        val isSuccess = deliverLocalRepository.update(Dummy.DELIVERY_DB_UPDATED)
-        assert(isSuccess == returnIsSuccess)
     }
 }

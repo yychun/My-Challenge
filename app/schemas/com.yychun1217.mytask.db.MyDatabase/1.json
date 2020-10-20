@@ -1,0 +1,127 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "c57ca4c40a1411a9b04ac406b93c5c4d",
+    "entities": [
+      {
+        "tableName": "delivery",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`delivery_fee` REAL NOT NULL, `delivery_goods_picture` TEXT NOT NULL, `delivery_is_favourite` INTEGER NOT NULL, `delivery_remarks` TEXT NOT NULL, `delivery_remote_id` TEXT NOT NULL, `delivery_surcharge` REAL NOT NULL, `delivery_route_id` INTEGER NOT NULL, `delivery_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "fee",
+            "columnName": "delivery_fee",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "goodsPicture",
+            "columnName": "delivery_goods_picture",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isFavourite",
+            "columnName": "delivery_is_favourite",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "remarks",
+            "columnName": "delivery_remarks",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "remoteId",
+            "columnName": "delivery_remote_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "surcharge",
+            "columnName": "delivery_surcharge",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "routeId",
+            "columnName": "delivery_route_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "delivery_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "delivery_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_delivery_delivery_remote_id",
+            "unique": true,
+            "columnNames": [
+              "delivery_remote_id"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_delivery_delivery_remote_id` ON `${TABLE_NAME}` (`delivery_remote_id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "route",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`route_from` TEXT NOT NULL, `route_to` TEXT NOT NULL, `route_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "from",
+            "columnName": "route_from",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "to",
+            "columnName": "route_to",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "route_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "route_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_route_route_from_route_to",
+            "unique": true,
+            "columnNames": [
+              "route_from",
+              "route_to"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_route_route_from_route_to` ON `${TABLE_NAME}` (`route_from`, `route_to`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c57ca4c40a1411a9b04ac406b93c5c4d')"
+    ]
+  }
+}

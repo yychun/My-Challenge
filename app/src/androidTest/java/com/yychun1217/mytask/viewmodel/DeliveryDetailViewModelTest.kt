@@ -4,8 +4,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.yychun1217.mytask.BaseTestCase
 import com.yychun1217.mytask.datasource.local.IDeliveryAndRouteLocalRepository
+import com.yychun1217.mytask.datasource.local.IDeliveryLocalRepository
 import com.yychun1217.mytask.dummy.Dummy
-import com.yychun1217.mytask.model.IDeliveryContract
 import com.yychun1217.mytask.util.anyObject
 import com.yychun1217.mytask.util.observeOnce
 import kotlinx.coroutines.*
@@ -23,21 +23,25 @@ class DeliveryDetailViewModelTest : BaseTestCase() {
     private lateinit var deliveryDetailViewModel: DeliveryDetailViewModel
 
     @Mock
-    private lateinit var iDeliveryLocalRepository: IDeliveryAndRouteLocalRepository
+    private lateinit var iDeliveryLocalRepository: IDeliveryLocalRepository
+
+    @Mock
+    private lateinit var iDeliveryAndRouteLocalRepository: IDeliveryAndRouteLocalRepository
 
     @Before
     fun setup() {
-        deliveryDetailViewModel = DeliveryDetailViewModel(iDeliveryLocalRepository)
+        deliveryDetailViewModel =
+            DeliveryDetailViewModel(iDeliveryLocalRepository, iDeliveryAndRouteLocalRepository)
     }
 
     @Test
     fun getDeliveryByID() {
         CoroutineScope(Dispatchers.Main).launch {
-            Mockito.`when`(iDeliveryLocalRepository.getDeliveryAndRoute(Dummy.DELIVER_ID))
+            Mockito.`when`(iDeliveryAndRouteLocalRepository.getDeliveryAndRoute(Dummy.ROUTE_ID))
                 .thenReturn(Dummy.DELIVERY_DB)
-            deliveryDetailViewModel.getDeliveryAndRouteByRouteID(Dummy.DELIVER_ID)
+            deliveryDetailViewModel.getDeliveryAndRouteByRouteID(Dummy.ROUTE_ID)
             deliveryDetailViewModel.deliveryAndRoute.observeOnce {
-                assert(it.id == Dummy.DELIVER_ID)
+                assert(it.route._idDb == Dummy.ROUTE_ID)
             }
         }
     }
@@ -45,17 +49,21 @@ class DeliveryDetailViewModelTest : BaseTestCase() {
     @Test
     fun toggleFavourite() {
         CoroutineScope(Dispatchers.Main).launch {
-            Mockito.`when`(iDeliveryLocalRepository.getDeliveryAndRoute(Dummy.DELIVER_ID))
+            Mockito.`when`(iDeliveryAndRouteLocalRepository.getDeliveryAndRoute(Dummy.ROUTE_ID))
                 .thenReturn(Dummy.DELIVERY_DB)
-            deliveryDetailViewModel.getDeliveryAndRouteByRouteID(Dummy.DELIVER_ID)
+            deliveryDetailViewModel.getDeliveryAndRouteByRouteID(Dummy.ROUTE_ID)
             deliveryDetailViewModel.deliveryAndRoute.observeOnce {
-                assert(it.id == Dummy.DELIVER_ID)
+                assert(it.route._idDb == Dummy.ROUTE_ID)
 
-                val update = it.copy(isFavourite = !it.isFavourite)
+                val update = it.copy(
+                    delivery = it.delivery.copy(
+                        isFavourite = !it.delivery.isFavourite
+                    )
+                )
                 runBlocking {
-                    (update.toEntity(EntityType.DB) as? IDeliveryContract.Db)?.let { updateDb ->
+                    update.toDb()?.let {
                         Mockito.`when`(iDeliveryLocalRepository.update(anyObject()))
-                            .thenReturn(true)
+                            .thenReturn(1)
                         deliveryDetailViewModel.toggleFavourite()
                         deliveryDetailViewModel.deliveryAndRoute.observeOnce {
                             assert(it.isFavourite == update.isFavourite)
