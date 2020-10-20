@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.yychun1217.mychallenge">
+    package="com.yychun1217.mytask">
 
     <uses-permission android:name="android.permission.INTERNET" />
 

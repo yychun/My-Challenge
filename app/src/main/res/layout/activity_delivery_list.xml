@@ -21,7 +21,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.yychun1217.mychallenge.ui.TwoPaneFragmentHostLayout
+    <com.yychun1217.mytask.ui.TwoPaneFragmentHostLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />

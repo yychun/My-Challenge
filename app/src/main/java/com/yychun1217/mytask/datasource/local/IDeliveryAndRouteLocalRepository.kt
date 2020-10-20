@@ -1,0 +1,3 @@
+package com.yychun1217.mytask.datasource.local
+
+interface IDeliveryAndRouteLocalRepository : IDeliveryAndRouteLocalDataSource

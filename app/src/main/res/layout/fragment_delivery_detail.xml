@@ -5,11 +5,11 @@
 
         <variable
             name="viewModel"
-            type="com.yychun1217.mychallenge.viewmodel.DeliveryDetailViewModel" />
+            type="com.yychun1217.mytask.viewmodel.DeliveryDetailViewModel" />
 
         <import type="android.view.View" />
 
-        <import type="com.yychun1217.mychallenge.util.Converter" />
+        <import type="com.yychun1217.mytask.util.Converter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

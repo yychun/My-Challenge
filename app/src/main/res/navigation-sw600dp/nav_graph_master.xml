@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_delivery_list"
-        android:name="com.yychun1217.mychallenge.ui.DeliveryListFragment"
+        android:name="com.yychun1217.mytask.ui.DeliveryListFragment"
         android:label="@string/label_delivery_list"
         tools:layout="@layout/fragment_delivery_list" />
 </navigation>

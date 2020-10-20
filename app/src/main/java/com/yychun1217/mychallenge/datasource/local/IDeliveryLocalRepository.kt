@@ -1,3 +1,0 @@
-package com.yychun1217.mychallenge.datasource.local
-
-interface IDeliveryLocalRepository : IDeliveryLocalDataSource
