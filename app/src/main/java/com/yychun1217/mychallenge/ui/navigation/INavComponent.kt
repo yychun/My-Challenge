@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import com.yychun1217.mychallenge.R
 import com.yychun1217.mychallenge.ui.navigation.INavComponent.Companion.findNavComponent
@@ -37,14 +38,14 @@ interface INavComponent {
         }
     }
 
-    fun navigate(@IdRes destinationId: Int, args: Bundle?): Boolean
+    fun navigate(@IdRes destinationId: Int, args: Bundle?, navOptions: NavOptions?): Boolean
 }
 
-fun Fragment.navigate(@IdRes destinationId: Int, args: Bundle?) {
+fun Fragment.navigate(@IdRes destinationId: Int, args: Bundle? = null, navOptions: NavOptions? = null) {
     view?.let {
-        val isNavigationHandled = it.findNavComponent()?.navigate(destinationId, args) ?: false
+        val isNavigationHandled = it.findNavComponent()?.navigate(destinationId, args, navOptions) ?: false
         if (!isNavigationHandled) {
-            it.findNavController().navigate(destinationId, args)
+            it.findNavController().navigate(destinationId, args, navOptions)
         }
     }
 }

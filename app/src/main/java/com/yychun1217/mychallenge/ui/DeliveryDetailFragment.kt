@@ -20,9 +20,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DeliveryDetailFragment : Fragment() {
     companion object {
-        private const val KEY_ID = "id"
+        private const val KEY_ID = "KEY_ID"
 
-        fun toBundle(id: String): Bundle = bundleOf(
+        fun toBundle(id: Long): Bundle = bundleOf(
             KEY_ID to id,
         )
     }
@@ -47,8 +47,8 @@ class DeliveryDetailFragment : Fragment() {
                 setGoodsPicture(it.goodsPicture)
             }
         }
-        arguments?.getString(KEY_ID)?.let {
             viewModel.getDeliveryByID(it)
+        arguments?.getLong(KEY_ID)?.let {
         } ?: kotlin.run {
             Timber.w("Key $KEY_ID must exist in arguments to instantiate DeliveryDetailFragment")
             findNavController().popBackStack()

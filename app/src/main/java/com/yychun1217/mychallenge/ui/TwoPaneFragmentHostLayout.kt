@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.annotation.IdRes
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import com.yychun1217.mychallenge.R
 import com.yychun1217.mychallenge.databinding.LayoutTwoPaneFragmentHostBinding
@@ -34,13 +35,13 @@ class TwoPaneFragmentHostLayout @JvmOverloads constructor(
     private val isTwoPane: Boolean
         get() = context.resources.getBoolean(R.bool.isTablet)
 
-    override fun navigate(destinationId: Int, args: Bundle?): Boolean {
+    override fun navigate(destinationId: Int, args: Bundle?, navOptions: NavOptions?): Boolean {
         val navHostFragment = if (isTwoPane) when {
             isMasterComponent(destinationId) -> binding.navMasterFragment
             isDetailComponent(destinationId) -> binding.navDetailFragment
             else -> null
         } else binding.navMasterFragment
-        return navHostFragment?.findNavController()?.navigate(destinationId, args)?.let {
+        return navHostFragment?.findNavController()?.navigate(destinationId, args, navOptions)?.let {
             true
         } ?: kotlin.run {
             Timber.w("No matching navHostFragment for destinationId $destinationId !")

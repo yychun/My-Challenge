@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yychun1217.mychallenge.R
@@ -65,18 +69,15 @@ class DeliveryListFragment : Fragment() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        activity?.actionBar?.title = getString(R.string.label_delivery_list)
-    }
-
     private fun initViews() {
+        setupNavigationUi()
+
         binding.listDelivery.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-            val deliveryAdapter = DeliveryAdapter { view, delivery ->
+            val deliveryAdapter = DeliveryAdapter { _, delivery ->
                 navigate(
                     R.id.fragment_delivery_detail,
-                    DeliveryDetailFragment.Companion.toBundle(delivery.route._idDB.toString())
+                    DeliveryDetailFragment.toBundle(delivery.route._idDb)
                 )
             }.apply {
                 addLoadStateListener { loadState ->
@@ -100,6 +101,13 @@ class DeliveryListFragment : Fragment() {
             }
         }
         onNewViewState(ViewState.Loading(true))
+    }
+
+    private fun setupNavigationUi() {
+        val navController = Navigation.findNavController(requireActivity(), R.id.nav_master_fragment)
+        val toolbar: Toolbar = requireActivity().findViewById(R.id.toolbar)
+        val appBinding = AppBarConfiguration(navController.graph)
+        NavigationUI.setupWithNavController(toolbar, navController, appBinding)
     }
 
     private fun onNewViewState(viewState: ViewState) {
