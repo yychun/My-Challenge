@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.yychun1217.mychallenge.db.MyDatabase
 import com.yychun1217.mychallenge.db.DeliveryDao
-import com.yychun1217.mychallenge.db.MiscDao
+import com.yychun1217.mychallenge.db.DeliveryAndRouteDao
 import com.yychun1217.mychallenge.db.RouteDao
 import dagger.Module
 import dagger.Provides
@@ -43,7 +43,7 @@ class RoomModule {
     @Provides
     @Singleton
     @Inject
-    fun provideMiscDao(
+    fun provideDeliveryAndRouteDao(
         myDatabase: MyDatabase
-    ): MiscDao = myDatabase.miscDao()
+    ): DeliveryAndRouteDao = myDatabase.deliveryAndRouteDao()
 }

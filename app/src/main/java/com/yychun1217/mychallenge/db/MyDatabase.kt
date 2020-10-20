@@ -15,7 +15,7 @@ import com.yychun1217.mychallenge.model.IRouteContract
 abstract class MyDatabase : RoomDatabase() {
     abstract fun deliveryDao(): DeliveryDao
     abstract fun routeDao(): RouteDao
-    abstract fun miscDao(): MiscDao
+    abstract fun deliveryAndRouteDao(): DeliveryAndRouteDao
 
     companion object {
         const val NAME = "my-database"

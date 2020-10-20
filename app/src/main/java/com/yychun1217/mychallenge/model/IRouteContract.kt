@@ -2,6 +2,7 @@ package com.yychun1217.mychallenge.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.yychun1217.pagination.model.IEntityContract
 
@@ -14,7 +15,12 @@ interface IRouteContract {
         override fun toUi(): Ui? = Ui(from = start, to = end)
     }
 
-    @Entity(tableName = Db.NAME_DB_TABLE)
+    @Entity(
+        tableName = Db.NAME_DB_TABLE,
+        indices = [
+            Index(value = [Db.COLUMN_FROM, Db.COLUMN_TO], unique = true),
+        ]
+    )
     data class Db(
         @ColumnInfo(name = COLUMN_FROM) val from: String,
         @ColumnInfo(name = COLUMN_TO) val to: String,
@@ -28,12 +34,14 @@ interface IRouteContract {
             const val COLUMN_TO = "${NAME_DB_TABLE}_to"
         }
 
-        override fun toUi(): Ui? = Ui(from = from, to = to, id)
+        override fun toUi(): Ui? = Ui(from = from, to = to, _idDb = id)
     }
 
     data class Ui(
         val from: String,
         val to: String,
-        val _idDB: Long = 0
-    ) : IEntityContract.Ui<Api, Db>
+        val _idDb: Long = 0,
+    ) : IEntityContract.Ui<Api, Db> {
+        override fun toDb(): Db? = Db(from, to, id = _idDb)
+    }
 }

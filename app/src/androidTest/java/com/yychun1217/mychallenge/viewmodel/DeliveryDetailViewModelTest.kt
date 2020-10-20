@@ -3,7 +3,7 @@ package com.yychun1217.mychallenge.viewmodel
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.yychun1217.mychallenge.BaseTestCase
-import com.yychun1217.mychallenge.datasource.local.IDeliveryLocalRepository
+import com.yychun1217.mychallenge.datasource.local.IDeliveryAndRouteLocalRepository
 import com.yychun1217.mychallenge.dummy.Dummy
 import com.yychun1217.mychallenge.model.IDeliveryContract
 import com.yychun1217.mychallenge.util.anyObject
@@ -23,7 +23,7 @@ class DeliveryDetailViewModelTest : BaseTestCase() {
     private lateinit var deliveryDetailViewModel: DeliveryDetailViewModel
 
     @Mock
-    private lateinit var iDeliveryLocalRepository: IDeliveryLocalRepository
+    private lateinit var iDeliveryLocalRepository: IDeliveryAndRouteLocalRepository
 
     @Before
     fun setup() {
@@ -35,8 +35,8 @@ class DeliveryDetailViewModelTest : BaseTestCase() {
         CoroutineScope(Dispatchers.Main).launch {
             Mockito.`when`(iDeliveryLocalRepository.getDeliveryAndRoute(Dummy.DELIVER_ID))
                 .thenReturn(Dummy.DELIVERY_DB)
-            deliveryDetailViewModel.getDeliveryByID(Dummy.DELIVER_ID)
-            deliveryDetailViewModel.delivery.observeOnce {
+            deliveryDetailViewModel.getDeliveryAndRouteByRouteID(Dummy.DELIVER_ID)
+            deliveryDetailViewModel.deliveryAndRoute.observeOnce {
                 assert(it.id == Dummy.DELIVER_ID)
             }
         }
@@ -47,8 +47,8 @@ class DeliveryDetailViewModelTest : BaseTestCase() {
         CoroutineScope(Dispatchers.Main).launch {
             Mockito.`when`(iDeliveryLocalRepository.getDeliveryAndRoute(Dummy.DELIVER_ID))
                 .thenReturn(Dummy.DELIVERY_DB)
-            deliveryDetailViewModel.getDeliveryByID(Dummy.DELIVER_ID)
-            deliveryDetailViewModel.delivery.observeOnce {
+            deliveryDetailViewModel.getDeliveryAndRouteByRouteID(Dummy.DELIVER_ID)
+            deliveryDetailViewModel.deliveryAndRoute.observeOnce {
                 assert(it.id == Dummy.DELIVER_ID)
 
                 val update = it.copy(isFavourite = !it.isFavourite)
@@ -57,7 +57,7 @@ class DeliveryDetailViewModelTest : BaseTestCase() {
                         Mockito.`when`(iDeliveryLocalRepository.update(anyObject()))
                             .thenReturn(true)
                         deliveryDetailViewModel.toggleFavourite()
-                        deliveryDetailViewModel.delivery.observeOnce {
+                        deliveryDetailViewModel.deliveryAndRoute.observeOnce {
                             assert(it.isFavourite == update.isFavourite)
                         }
                     }

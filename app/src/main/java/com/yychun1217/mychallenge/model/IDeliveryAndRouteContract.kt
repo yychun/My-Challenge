@@ -29,38 +29,49 @@ interface IDeliveryAndRouteContract {
 
         override fun toUi(): Ui? = route.toUi()?.let {
             Ui(
-                fee = deliveryFee.substring(1).toFloat(),
+                delivery = IDeliveryContract.Ui(
+                    fee = deliveryFee.substring(1).toFloat(),
+                    goodsPicture = goodsPicture,
+                    isFavourite = false,
+                    remarks = remarks,
+                    remoteId = id,
+                    surcharge = surcharge.substring(1).toFloat(),
+                ),
                 route = it,
-                remoteId = id,
-                isFavourite = false,
-                remarks = remarks,
-                goodsPicture = goodsPicture,
-                surcharge = surcharge.substring(1).toFloat(),
             )
         }
     }
 
     data class Ui(
-        val fee: Float,
-        val isFavourite: Boolean,
-        val remarks: String,
-        val remoteId: String,
+        val delivery: IDeliveryContract.Ui,
         val route: IRouteContract.Ui,
-        val goodsPicture: String,
-        val surcharge: Float,
     ) : IEntityContract.Ui<Api, Db> {
+        val fee: Float
+            get() = delivery.fee
+        val goodsPicture: String
+            get() = delivery.goodsPicture
+        val isFavourite: Boolean
+            get() = delivery.isFavourite
         val price: Float
-            get() = fee + surcharge
+            get() = delivery.fee + delivery.surcharge
+        val remarks: String
+            get() = delivery.remarks
+        val remoteId: String
+            get() = delivery.remoteId
+        val surcharge: Float
+            get() = delivery.surcharge
 
         override fun toDb(): Db? = route.toDb()?.let {
             Db(
                 delivery = IDeliveryContract.Db(
-                    fee = fee,
-                    goodsPicture = goodsPicture,
-                    isFavourite = isFavourite,
-                    remarks = remarks,
-                    remoteId = remoteId,
-                    surcharge = surcharge
+                    fee = delivery.fee,
+                    goodsPicture = delivery.goodsPicture,
+                    isFavourite = delivery.isFavourite,
+                    remarks = delivery.remarks,
+                    remoteId = delivery.remoteId,
+                    surcharge = delivery.surcharge,
+                    routeId = it.id,
+                    id = delivery._idDb,
                 ),
                 route = it,
             )
@@ -70,20 +81,23 @@ interface IDeliveryAndRouteContract {
     data class Db(
         @Relation(
             parentColumn = IRouteContract.Db.COLUMN_ID,
-            entityColumn = IDeliveryContract.Db.COLUMN_ROUTE
+            entityColumn = IDeliveryContract.Db.COLUMN_ROUTE_ID
         )
         val delivery: IDeliveryContract.Db,
         @Embedded val route: IRouteContract.Db,
     ) : IEntityContract.Db<Api, Ui> {
         override fun toUi(): Ui? = route.toUi()?.let {
             Ui(
-                fee = delivery.fee,
+                delivery = IDeliveryContract.Ui(
+                    fee = delivery.fee,
+                    goodsPicture = delivery.goodsPicture,
+                    isFavourite = delivery.isFavourite,
+                    remoteId = delivery.remoteId,
+                    remarks = delivery.remarks,
+                    surcharge = delivery.surcharge,
+                    _idDb = delivery.id,
+                ),
                 route = it,
-                remoteId = delivery.remoteId,
-                isFavourite = delivery.isFavourite,
-                remarks = delivery.remarks,
-                goodsPicture = delivery.goodsPicture,
-                surcharge = delivery.surcharge,
             )
         }
     }

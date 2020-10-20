@@ -1,50 +1,49 @@
 package com.yychun1217.mychallenge.viewmodel
 
-import android.database.sqlite.SQLiteConstraintException
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.yychun1217.mychallenge.datasource.local.IDeliveryAndRouteLocalRepository
 import com.yychun1217.mychallenge.datasource.local.IDeliveryLocalRepository
 import com.yychun1217.mychallenge.model.IDeliveryAndRouteContract
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class DeliveryDetailViewModel @ViewModelInject constructor(
-    private val iDeliveryLocalRepository: IDeliveryLocalRepository
+    private val iDeliveryLocalRepository: IDeliveryLocalRepository,
+    private val iDeliveryAndRouteLocalRepository: IDeliveryAndRouteLocalRepository
 ) : ViewModel() {
-    private val _delivery: MutableLiveData<IDeliveryAndRouteContract.Ui> = MutableLiveData()
-    val delivery: LiveData<IDeliveryAndRouteContract.Ui>
-        get() = _delivery
+    private val _deliveryAndRoute: MutableLiveData<IDeliveryAndRouteContract.Ui> = MutableLiveData()
+    val deliveryAndRoute: LiveData<IDeliveryAndRouteContract.Ui>
+        get() = _deliveryAndRoute
 
-    fun getDeliveryByID(id: String) {
+    fun getDeliveryAndRouteByRouteID(routeId: Long) {
+        Timber.d("getDeliveryAndRouteByRouteId: $routeId")
         viewModelScope.launch {
-            iDeliveryLocalRepository.getDeliveryAndRoute(id)?.toUi()?.let {
+            iDeliveryAndRouteLocalRepository.getDeliveryAndRoute(routeId)?.toUi()?.let {
                 postDelivery(it)
             }
         }
     }
 
     fun toggleFavourite() {
-        _delivery.value?.let { old ->
-            val update = old.copy(isFavourite = !old.isFavourite)
+        _deliveryAndRoute.value?.let { old ->
+            val update = old.copy(delivery = old.delivery.copy(
+                isFavourite = !old.delivery.isFavourite
+            ))
             postDelivery(update)
 
             viewModelScope.launch {
-                update.toDb()?.let { delivery ->
-                    try {
-                        if (!iDeliveryLocalRepository.update(delivery)) postDelivery(old)
-                    } catch (e: SQLiteConstraintException) {
-                        Timber.e(e)
-                        postDelivery(old)
-                    }
+                update.toDb()?.delivery?.let {
+                    if (iDeliveryLocalRepository.update(it) == 0) postDelivery(old)
                 }
             }
         }
     }
 
     private fun postDelivery(delivery: IDeliveryAndRouteContract.Ui) {
-        _delivery.postValue(delivery)
+        _deliveryAndRoute.postValue(delivery)
     }
 }

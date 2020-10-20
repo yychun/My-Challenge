@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "931170e9959a9a7b2f3a062e68820c80",
+    "identityHash": "c57ca4c40a1411a9b04ac406b93c5c4d",
     "entities": [
       {
         "tableName": "delivery",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`delivery_fee` REAL NOT NULL, `delivery_goods_picture` TEXT NOT NULL, `delivery_is_favourite` INTEGER NOT NULL, `delivery_remarks` TEXT NOT NULL, `delivery_remote_id` TEXT NOT NULL, `delivery_surcharge` REAL NOT NULL, `delivery_route` INTEGER NOT NULL, `delivery_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`delivery_fee` REAL NOT NULL, `delivery_goods_picture` TEXT NOT NULL, `delivery_is_favourite` INTEGER NOT NULL, `delivery_remarks` TEXT NOT NULL, `delivery_remote_id` TEXT NOT NULL, `delivery_surcharge` REAL NOT NULL, `delivery_route_id` INTEGER NOT NULL, `delivery_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "fee",
@@ -46,7 +46,7 @@
           },
           {
             "fieldPath": "routeId",
-            "columnName": "delivery_route",
+            "columnName": "delivery_route_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -63,7 +63,16 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_delivery_delivery_remote_id",
+            "unique": true,
+            "columnNames": [
+              "delivery_remote_id"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_delivery_delivery_remote_id` ON `${TABLE_NAME}` (`delivery_remote_id`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -95,14 +104,24 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_route_route_from_route_to",
+            "unique": true,
+            "columnNames": [
+              "route_from",
+              "route_to"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_route_route_from_route_to` ON `${TABLE_NAME}` (`route_from`, `route_to`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '931170e9959a9a7b2f3a062e68820c80')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c57ca4c40a1411a9b04ac406b93c5c4d')"
     ]
   }
 }

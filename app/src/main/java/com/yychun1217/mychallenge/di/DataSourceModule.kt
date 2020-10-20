@@ -1,7 +1,8 @@
 package com.yychun1217.mychallenge.di
 
 import com.yychun1217.mychallenge.datasource.local.*
-import com.yychun1217.mychallenge.db.MiscDao
+import com.yychun1217.mychallenge.db.DeliveryAndRouteDao
+import com.yychun1217.mychallenge.db.DeliveryDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,9 +14,22 @@ import javax.inject.Inject
 class DataSourceModule {
     @Provides
     @Inject
+    fun provideIDeliveryAndRouteLocalDataSource(
+        deliveryAndRouteDao: DeliveryAndRouteDao
+    ): IDeliveryAndRouteLocalDataSource = DeliveryAndRouteLocalDataSource(deliveryAndRouteDao)
+
+    @Provides
+    @Inject
     fun provideIDeliveryLocalDataSource(
-        miscDao: MiscDao
-    ): IDeliveryLocalDataSource = DeliveryLocalDataSource(miscDao)
+        deliveryDao: DeliveryDao
+    ): IDeliveryLocalDataSource = DeliveryLocalDataSource(deliveryDao)
+
+    @Provides
+    @Inject
+    fun provideIDeliveryAndRouteLocalRepository(
+        iDeliveryAndRouteLocalDataSource: IDeliveryAndRouteLocalDataSource
+    ): IDeliveryAndRouteLocalRepository =
+        DeliveryAndRouteLocalRepository(iDeliveryAndRouteLocalDataSource)
 
     @Provides
     @Inject

@@ -8,7 +8,7 @@ abstract class AbstractMergedPagingSource<KEY : Any, DB : IEntityContract.Db<API
     override val local: ILocalPagingSource<KEY, DB>,
     override val remote: IRemotePagingSource<KEY, API>
 ) : PagingSource<KEY, UI>(), IMergedPagingSource<KEY, DB, API> {
-    override suspend fun load(params: LoadParams<KEY>): PagingSource.LoadResult<KEY, UI> {
+    override suspend fun load(params: LoadParams<KEY>): LoadResult<KEY, UI> {
         return try {
             val key = params.key ?: getFirstKey()
             val localPage = local.loadPage(key)

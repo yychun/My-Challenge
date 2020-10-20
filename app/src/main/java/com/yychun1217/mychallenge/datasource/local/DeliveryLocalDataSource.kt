@@ -1,18 +1,17 @@
 package com.yychun1217.mychallenge.datasource.local
 
 import android.database.sqlite.SQLiteException
-import com.yychun1217.mychallenge.db.MiscDao
-import com.yychun1217.mychallenge.model.IDeliveryAndRouteContract
+import com.yychun1217.mychallenge.db.DeliveryDao
+import com.yychun1217.mychallenge.model.IDeliveryContract
+import timber.log.Timber
 
 class DeliveryLocalDataSource(
-    private val miscDao: MiscDao
+    private val deliveryDao: DeliveryDao
 ) : IDeliveryLocalDataSource {
-    override suspend fun getDeliveryAndRoute(id: String): IDeliveryAndRouteContract.Db? = miscDao.get(id)
-
-    override suspend fun update(delivery: IDeliveryAndRouteContract.Db): Boolean = try {
-        miscDao.update(delivery)
-        true
+    override suspend fun update(vararg delivery: IDeliveryContract.Db): Int = try {
+        deliveryDao.update(*delivery)
     } catch (e: SQLiteException) {
-        false
+        Timber.e(e)
+        0
     }
 }

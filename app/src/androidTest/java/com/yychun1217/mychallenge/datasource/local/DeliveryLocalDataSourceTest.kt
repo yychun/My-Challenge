@@ -17,14 +17,14 @@ import org.mockito.Mockito
 @SmallTest
 class DeliveryLocalDataSourceTest : BaseTestCase() {
 
-    private lateinit var deliverLocalDataSource: DeliveryLocalDataSource
+    private lateinit var deliverLocalDataSource: DeliveryAndRouteLocalDataSource
 
     @Mock
     private lateinit var deliveryDao: DeliveryDao
 
     @Before
     fun setup() {
-        deliverLocalDataSource = DeliveryLocalDataSource(deliveryDao)
+        deliverLocalDataSource = DeliveryAndRouteLocalDataSource(deliveryDao)
     }
 
     @Test

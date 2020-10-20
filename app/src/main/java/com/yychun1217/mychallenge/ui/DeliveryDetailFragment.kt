@@ -42,13 +42,13 @@ class DeliveryDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.delivery.observe(viewLifecycleOwner) {
+        viewModel.deliveryAndRoute.observe(viewLifecycleOwner) {
             it?.let {
                 setGoodsPicture(it.goodsPicture)
             }
         }
-            viewModel.getDeliveryByID(it)
         arguments?.getLong(KEY_ID)?.let {
+            viewModel.getDeliveryAndRouteByRouteID(it)
         } ?: kotlin.run {
             Timber.w("Key $KEY_ID must exist in arguments to instantiate DeliveryDetailFragment")
             findNavController().popBackStack()

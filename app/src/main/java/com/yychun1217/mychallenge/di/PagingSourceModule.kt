@@ -1,13 +1,13 @@
 package com.yychun1217.mychallenge.di
 
 import com.yychun1217.mychallenge.DeliveryService
-import com.yychun1217.mychallenge.db.MiscDao
+import com.yychun1217.mychallenge.db.DeliveryAndRouteDao
 import com.yychun1217.mychallenge.model.IDeliveryAndRouteContract
 import com.yychun1217.mychallenge.pagingsource.AbstractDeliveryMergedPagingSource
 import com.yychun1217.mychallenge.pagingsource.DeliveryMergedPagingSource
 import com.yychun1217.mychallenge.pagingsource.remote.DeliveryRemotePagingSource
 import com.yychun1217.mychallenge.model.request.GetDeliveryRequest
-import com.yychun1217.mychallenge.pagingsource.local.DeliveryLocalPagingSource
+import com.yychun1217.mychallenge.pagingsource.local.DeliveryAndRouteLocalPagingSource
 import com.yychun1217.pagination.pagingsource.ILocalPagingSource
 import com.yychun1217.pagination.pagingsource.IRemotePagingSource
 import dagger.Module
@@ -22,9 +22,9 @@ class PagingSourceModule {
     @Provides
     @Inject
     fun provideILocalPagingSource(
-        miscDao: MiscDao
+        deliveryAndRouteDao: DeliveryAndRouteDao
     ): ILocalPagingSource<GetDeliveryRequest, IDeliveryAndRouteContract.Db> =
-        DeliveryLocalPagingSource(miscDao)
+        DeliveryAndRouteLocalPagingSource(deliveryAndRouteDao)
 
     @Provides
     @Inject
