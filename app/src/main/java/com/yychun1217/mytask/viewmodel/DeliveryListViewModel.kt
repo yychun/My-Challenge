@@ -10,6 +10,7 @@ import com.yychun1217.mytask.datasource.local.IDeliveryAndRouteLocalDataSource
 import com.yychun1217.mytask.model.IDeliveryAndRouteContract
 import com.yychun1217.mytask.pagingsource.AbstractDeliveryMergedPagingSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 class DeliveryListViewModel @ViewModelInject constructor(
     private val merged: AbstractDeliveryMergedPagingSource,
@@ -28,4 +29,10 @@ class DeliveryListViewModel @ViewModelInject constructor(
         }.flow.cachedIn(viewModelScope)
 
     var prevScrollPosition: Int? = null
+
+    fun clearLocalDataSource() {
+        viewModelScope.launch {
+            iDeliveryAndRouteLocalDataSource.delete()
+        }
+    }
 }

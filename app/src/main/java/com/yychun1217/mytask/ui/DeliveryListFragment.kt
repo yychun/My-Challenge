@@ -98,6 +98,7 @@ class DeliveryListFragment : Fragment() {
         }
 
         binding.refreshLayoutDelivery.setOnRefreshListener {
+            viewModel.clearLocalDataSource()
             collectAndSubmitDeliveries()
         }
 

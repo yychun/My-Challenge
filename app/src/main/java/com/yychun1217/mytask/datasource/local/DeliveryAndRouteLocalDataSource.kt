@@ -7,4 +7,6 @@ class DeliveryAndRouteLocalDataSource(
     private val deliveryAndRouteDao: DeliveryAndRouteDao
 ) : IDeliveryAndRouteLocalDataSource {
     override suspend fun getDeliveryAndRoute(routeId: Long): IDeliveryAndRouteContract.Db? = deliveryAndRouteDao.get(routeId)
+
+    override suspend fun delete() = deliveryAndRouteDao.delete()
 }
