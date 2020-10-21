@@ -16,6 +16,7 @@ import com.yychun1217.mytask.R
 import com.yychun1217.mytask.databinding.FragmentDeliveryListBinding
 import com.yychun1217.mytask.model.ViewState
 import com.yychun1217.mytask.model.toViewState
+import com.yychun1217.mytask.ui.navigation.INavComponent
 import com.yychun1217.mytask.ui.navigation.navigate
 import com.yychun1217.mytask.viewmodel.DeliveryListViewModel
 import com.yychun1217.pagination.ui.PaginationLoadStateAdapter
@@ -116,8 +117,9 @@ class DeliveryListFragment : Fragment() {
     }
 
     private fun setupNavigationUi() {
-        val navController =
-            Navigation.findNavController(requireActivity(), R.id.nav_master_fragment)
+        if (INavComponent.isTwoPaneMode(requireContext())) return
+        val viewId = R.id.nav_master_fragment
+        val navController = Navigation.findNavController(requireActivity(), viewId)
         val toolbar: Toolbar = requireActivity().findViewById(R.id.toolbar)
         val appBinding = AppBarConfiguration(navController.graph)
         NavigationUI.setupWithNavController(toolbar, navController, appBinding)

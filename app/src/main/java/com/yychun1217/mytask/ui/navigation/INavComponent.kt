@@ -1,5 +1,6 @@
 package com.yychun1217.mytask.ui.navigation
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.IdRes
@@ -7,14 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import com.yychun1217.mytask.R
-import com.yychun1217.mytask.ui.navigation.INavComponent.Companion.findNavComponent
 import java.lang.ref.WeakReference
 
 interface INavComponent {
     companion object {
-        fun View.findNavComponent(): INavComponent? = findViewNavComponent(this)
+        fun isTwoPaneMode(context: Context) = context.resources.getBoolean(R.bool.isTablet)
 
-        private fun findViewNavComponent(aView: View): INavComponent? {
+        fun findViewNavComponent(aView: View): INavComponent? {
             var view = aView
             while (true) {
                 getViewNavComponent(view)?.let {
@@ -41,9 +41,16 @@ interface INavComponent {
     fun navigate(@IdRes destinationId: Int, args: Bundle?, navOptions: NavOptions?): Boolean
 }
 
-fun Fragment.navigate(@IdRes destinationId: Int, args: Bundle? = null, navOptions: NavOptions? = null) {
+fun View.findNavComponent(): INavComponent? = INavComponent.findViewNavComponent(this)
+
+fun Fragment.navigate(
+    @IdRes destinationId: Int,
+    args: Bundle? = null,
+    navOptions: NavOptions? = null
+) {
     view?.let {
-        val isNavigationHandled = it.findNavComponent()?.navigate(destinationId, args, navOptions) ?: false
+        val isNavigationHandled =
+            it.findNavComponent()?.navigate(destinationId, args, navOptions) ?: false
         if (!isNavigationHandled) {
             it.findNavController().navigate(destinationId, args, navOptions)
         }

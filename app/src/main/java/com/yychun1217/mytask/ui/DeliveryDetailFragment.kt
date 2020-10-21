@@ -7,11 +7,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.yychun1217.mytask.R
 import com.yychun1217.mytask.databinding.FragmentDeliveryDetailBinding
+import com.yychun1217.mytask.ui.navigation.INavComponent
 import com.yychun1217.mytask.viewmodel.DeliveryDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -42,17 +48,29 @@ class DeliveryDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupNavigationUi()
+
         viewModel.deliveryAndRoute.observe(viewLifecycleOwner) {
             it?.let {
                 setGoodsPicture(it.goodsPicture)
             }
         }
+
         arguments?.getLong(KEY_ID)?.let {
             viewModel.getDeliveryAndRouteByRouteID(it)
         } ?: kotlin.run {
             Timber.w("Key $KEY_ID must exist in arguments to instantiate DeliveryDetailFragment")
             findNavController().popBackStack()
         }
+    }
+
+    private fun setupNavigationUi() {
+        if (INavComponent.isTwoPaneMode(requireContext())) return
+        val viewId = R.id.nav_master_fragment
+        val navController = Navigation.findNavController(requireActivity(), viewId)
+        val toolbar: Toolbar = requireActivity().findViewById(R.id.toolbar)
+        val appBinding = AppBarConfiguration(navController.graph)
+        NavigationUI.setupWithNavController(toolbar, navController, appBinding)
     }
 
     private fun setGoodsPicture(pictureUrl: String) {
