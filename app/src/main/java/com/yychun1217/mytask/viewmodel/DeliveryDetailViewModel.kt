@@ -5,15 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yychun1217.mytask.datasource.local.IDeliveryAndRouteLocalRepository
-import com.yychun1217.mytask.datasource.local.IDeliveryLocalRepository
+import com.yychun1217.mytask.datasource.local.IDeliveryAndRouteLocalDataSource
+import com.yychun1217.mytask.datasource.local.IDeliveryLocalDataSource
 import com.yychun1217.mytask.model.IDeliveryAndRouteContract
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class DeliveryDetailViewModel @ViewModelInject constructor(
-    private val iDeliveryLocalRepository: IDeliveryLocalRepository,
-    private val iDeliveryAndRouteLocalRepository: IDeliveryAndRouteLocalRepository
+    private val iDeliveryLocalDataSource: IDeliveryLocalDataSource,
+    private val iDeliveryAndRouteLocalDataSource: IDeliveryAndRouteLocalDataSource
 ) : ViewModel() {
     private val _deliveryAndRoute: MutableLiveData<IDeliveryAndRouteContract.Ui> = MutableLiveData()
     val deliveryAndRoute: LiveData<IDeliveryAndRouteContract.Ui>
@@ -22,7 +22,7 @@ class DeliveryDetailViewModel @ViewModelInject constructor(
     fun getDeliveryAndRouteByRouteID(routeId: Long) {
         Timber.d("getDeliveryAndRouteByRouteId: $routeId")
         viewModelScope.launch {
-            iDeliveryAndRouteLocalRepository.getDeliveryAndRoute(routeId)?.toUi()?.let {
+            iDeliveryAndRouteLocalDataSource.getDeliveryAndRoute(routeId)?.toUi()?.let {
                 postDelivery(it)
             }
         }
@@ -37,7 +37,7 @@ class DeliveryDetailViewModel @ViewModelInject constructor(
 
             viewModelScope.launch {
                 update.toDb()?.delivery?.let {
-                    if (iDeliveryLocalRepository.update(it) == 0) postDelivery(old)
+                    if (iDeliveryLocalDataSource.update(it) == 0) postDelivery(old)
                 }
             }
         }

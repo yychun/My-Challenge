@@ -23,17 +23,4 @@ class DataSourceModule {
     fun provideIDeliveryLocalDataSource(
         deliveryDao: DeliveryDao
     ): IDeliveryLocalDataSource = DeliveryLocalDataSource(deliveryDao)
-
-    @Provides
-    @Inject
-    fun provideIDeliveryAndRouteLocalRepository(
-        iDeliveryAndRouteLocalDataSource: IDeliveryAndRouteLocalDataSource
-    ): IDeliveryAndRouteLocalRepository =
-        DeliveryAndRouteLocalRepository(iDeliveryAndRouteLocalDataSource)
-
-    @Provides
-    @Inject
-    fun provideIDeliveryLocalRepository(
-        iDeliveryLocalDataSource: IDeliveryLocalDataSource
-    ): IDeliveryLocalRepository = DeliveryLocalRepository(iDeliveryLocalDataSource)
 }

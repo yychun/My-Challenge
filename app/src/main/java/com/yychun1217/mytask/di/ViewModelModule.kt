@@ -1,7 +1,7 @@
 package com.yychun1217.mytask.di
 
-import com.yychun1217.mytask.datasource.local.IDeliveryAndRouteLocalRepository
-import com.yychun1217.mytask.datasource.local.IDeliveryLocalRepository
+import com.yychun1217.mytask.datasource.local.IDeliveryAndRouteLocalDataSource
+import com.yychun1217.mytask.datasource.local.IDeliveryLocalDataSource
 import com.yychun1217.mytask.pagingsource.AbstractDeliveryMergedPagingSource
 import com.yychun1217.mytask.viewmodel.DeliveryDetailViewModel
 import com.yychun1217.mytask.viewmodel.DeliveryListViewModel
@@ -19,14 +19,15 @@ class ViewModelModule {
     @FragmentScoped
     @Inject
     fun provideDeliveryListViewModel(
-        merged: AbstractDeliveryMergedPagingSource
-    ) = DeliveryListViewModel(merged)
+        merged: AbstractDeliveryMergedPagingSource,
+        iDeliveryAndRouteLocalDataSource: IDeliveryAndRouteLocalDataSource
+    ) = DeliveryListViewModel(merged, iDeliveryAndRouteLocalDataSource)
 
     @Provides
     @FragmentScoped
     @Inject
     fun provideDeliveryDetailViewModel(
-        iDeliveryLocalRepository: IDeliveryLocalRepository,
-        iDeliveryAndRouteLocalRepository: IDeliveryAndRouteLocalRepository
-    ) = DeliveryDetailViewModel(iDeliveryLocalRepository, iDeliveryAndRouteLocalRepository)
+        iDeliveryLocalDataSource: IDeliveryLocalDataSource,
+        iDeliveryAndRouteLocalDataSource: IDeliveryAndRouteLocalDataSource
+    ) = DeliveryDetailViewModel(iDeliveryLocalDataSource, iDeliveryAndRouteLocalDataSource)
 }

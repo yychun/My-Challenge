@@ -33,6 +33,19 @@ class DeliveryListFragment : Fragment() {
     @Inject
     lateinit var viewModel: DeliveryListViewModel
     private lateinit var binding: FragmentDeliveryListBinding
+    private val deliveryAdapter: DeliveryAdapter by lazy {
+        DeliveryAdapter { _, delivery ->
+            navigate(
+                R.id.fragment_delivery_detail,
+                DeliveryDetailFragment.toBundle(delivery.route._idDb)
+            )
+        }.apply {
+            addLoadStateListener { loadState ->
+                Timber.d("deliveryList.loadState: $loadState")
+                onNewViewState(loadState.toViewState())
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,46 +85,38 @@ class DeliveryListFragment : Fragment() {
     private fun initViews() {
         setupNavigationUi()
 
-        binding.listDelivery.apply {
+        with(binding.listDelivery) {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-            val deliveryAdapter = DeliveryAdapter { _, delivery ->
-                navigate(
-                    R.id.fragment_delivery_detail,
-                    DeliveryDetailFragment.toBundle(delivery.route._idDb)
-                )
-            }.apply {
-                addLoadStateListener { loadState ->
-                    Timber.d("deliveryList.loadState: $loadState")
-                    onNewViewState(loadState.toViewState())
-                }
-            }
-
-            collectAndSubmitDeliveries()
 
             adapter = deliveryAdapter.withLoadStateFooter(PaginationLoadStateAdapter {
                 deliveryAdapter.retry()
             })
+        }
 
-            binding.buttonErrorRetry.setOnClickListener {
-                deliveryAdapter.retry()
-            }
+        binding.buttonErrorRetry.setOnClickListener {
+            deliveryAdapter.retry()
         }
+
         binding.refreshLayoutDelivery.setOnRefreshListener {
-            (binding.listDelivery.adapter as? DeliveryAdapter)?.refresh()
+            collectAndSubmitDeliveries()
         }
+
+        collectAndSubmitDeliveries()
+
         onNewViewState(ViewState.Loading(true))
     }
 
     private fun collectAndSubmitDeliveries() {
         lifecycleScope.launchWhenResumed {
-            viewModel.appPage.collectLatest {
-                (binding.listDelivery.adapter as? DeliveryAdapter)?.submitData(it)
+            viewModel.deliverAndRoutes.collectLatest {
+                deliveryAdapter.submitData(it)
             }
         }
     }
 
     private fun setupNavigationUi() {
-        val navController = Navigation.findNavController(requireActivity(), R.id.nav_master_fragment)
+        val navController =
+            Navigation.findNavController(requireActivity(), R.id.nav_master_fragment)
         val toolbar: Toolbar = requireActivity().findViewById(R.id.toolbar)
         val appBinding = AppBarConfiguration(navController.graph)
         NavigationUI.setupWithNavController(toolbar, navController, appBinding)

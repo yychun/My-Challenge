@@ -62,4 +62,9 @@ abstract class DeliveryAndRouteDao(
         Timber.d("update.deliveryUpdateResult: $deliveryUpdateResult")
         return routeUpdateResult
     }
+
+    suspend fun delete() {
+        database.deliveryDao().delete()
+        database.routeDao().delete()
+    }
 }

@@ -19,4 +19,7 @@ interface RouteDao {
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(vararg route: IRouteContract.Db): Int
+
+    @Query("DELETE FROM ${IRouteContract.Db.NAME_DB_TABLE}")
+    suspend fun delete()
 }

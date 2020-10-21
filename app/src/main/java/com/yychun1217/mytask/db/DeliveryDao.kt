@@ -19,4 +19,7 @@ interface DeliveryDao {
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(vararg delivery: IDeliveryContract.Db): Int
+
+    @Query("DELETE FROM ${IDeliveryContract.Db.NAME_DB_TABLE}")
+    suspend fun delete()
 }
