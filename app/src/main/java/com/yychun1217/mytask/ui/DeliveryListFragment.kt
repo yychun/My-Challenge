@@ -86,11 +86,7 @@ class DeliveryListFragment : Fragment() {
                 }
             }
 
-            lifecycleScope.launchWhenResumed {
-                viewModel.appPage.collectLatest {
-                    deliveryAdapter.submitData(it)
-                }
-            }
+            collectAndSubmitDeliveries()
 
             adapter = deliveryAdapter.withLoadStateFooter(PaginationLoadStateAdapter {
                 deliveryAdapter.retry()
@@ -100,7 +96,18 @@ class DeliveryListFragment : Fragment() {
                 deliveryAdapter.retry()
             }
         }
+        binding.refreshLayoutDelivery.setOnRefreshListener {
+            (binding.listDelivery.adapter as? DeliveryAdapter)?.refresh()
+        }
         onNewViewState(ViewState.Loading(true))
+    }
+
+    private fun collectAndSubmitDeliveries() {
+        lifecycleScope.launchWhenResumed {
+            viewModel.appPage.collectLatest {
+                (binding.listDelivery.adapter as? DeliveryAdapter)?.submitData(it)
+            }
+        }
     }
 
     private fun setupNavigationUi() {
@@ -114,36 +121,36 @@ class DeliveryListFragment : Fragment() {
         Timber.d("deliveryList.viewState: $viewState")
         when (viewState) {
             is ViewState.Loading -> {
-                binding.layoutError.visibility = View.GONE
+                binding.groupError.visibility = View.GONE
                 if (viewState.isEmpty) {
-                    binding.progressBar.visibility = View.VISIBLE
+                    binding.refreshLayoutDelivery.isRefreshing = true
                     binding.textEmpty.visibility = View.GONE
                     binding.listDelivery.visibility = View.GONE
                 } else {
                     binding.listDelivery.visibility = View.VISIBLE
                     binding.textEmpty.visibility = View.GONE
-                    binding.progressBar.visibility = View.GONE
+                    binding.refreshLayoutDelivery.isRefreshing = false
                 }
             }
             is ViewState.Error -> {
-                binding.progressBar.visibility = View.GONE
+                binding.refreshLayoutDelivery.isRefreshing = false
                 if (viewState.isEmpty) {
                     binding.textError.text = viewState.error.localizedMessage
-                    binding.layoutError.visibility = View.VISIBLE
+                    binding.groupError.visibility = View.VISIBLE
                     binding.textEmpty.visibility = View.GONE
                     binding.listDelivery.visibility = View.GONE
                 } else {
                     binding.listDelivery.visibility = View.VISIBLE
                     binding.textEmpty.visibility = View.GONE
-                    binding.layoutError.visibility = View.GONE
+                    binding.groupError.visibility = View.GONE
                 }
             }
             ViewState.NotLoading -> {
                 restoreScrollPosition()
                 binding.listDelivery.visibility = View.VISIBLE
                 binding.textEmpty.visibility = View.VISIBLE
-                binding.progressBar.visibility = View.GONE
-                binding.layoutError.visibility = View.GONE
+                binding.refreshLayoutDelivery.isRefreshing = false
+                binding.groupError.visibility = View.GONE
             }
         }
     }
